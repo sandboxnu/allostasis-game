@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import './LaunchScreen.css';
+import Grid from './Grid/Grid.js'
 
 class LaunchScreen extends Component {
   render() {
     return (
-      <div className="test">
-        <p> Hello World!</p>
-      </div>
+      <Grid/>
     );
   }
 }
