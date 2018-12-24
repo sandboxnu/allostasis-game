@@ -29,7 +29,7 @@ class LaunchScreen extends Component {
 			screen = <StartButton onClick={this.handleStartClick}/>;
 		}
 		return (
-			<div>
+			<div className="launchScreen">
 				{screen}
 			</div>
 		);
