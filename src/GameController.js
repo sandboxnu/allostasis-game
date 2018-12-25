@@ -57,7 +57,6 @@ class GameController extends Component {
       y = Math.round(Math.random() * GRID_LENGTH);
 
       if (numWaterOne > 0) {
-        console.debug('x ' + x + ' y ' + y);
         if (grid[x][y] === GlobalConstants.EMPTY_GRID_CELL) {
           grid[x][y] = GlobalConstants.WATER_ONE_GRID_CELL;
           numWaterOne--;

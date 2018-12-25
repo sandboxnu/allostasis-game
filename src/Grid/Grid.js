@@ -40,14 +40,23 @@ class Grid extends Component {
         if (this.isWaterObject(curGrid)) {
           gridObjects.push(<WaterComponent
                              size={size}
-                             waterType={curGrid}/>);
+                             waterType={curGrid}
+                             x={x}
+                             y={y}
+                             key={x + ' ' + y}/>);
         } else if (this.isFoodObject(curGrid)) {
           gridObjects.push(<FoodComponent
                              size={size}
-                             foodType={curGrid}/>);
+                             foodType={curGrid}
+                             x={x}
+                             y={y}
+                             key={x + ' ' + y}/>);
         } else {
           gridObjects.push(<GridComponent
-                              size={size}/>);
+                              size={size}
+                              x={x}
+                              y={y}
+                              key={x + ' ' + y}/>);
         }
       }
     }
