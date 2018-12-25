@@ -6,19 +6,22 @@ import Grid from './Grid/Grid.js'
 function StartButton(props) {
 	return(
 		<button onClick={props.onClick}>
-		Start Game
+			Start Game
 		</button>);
 }
 
-function handleStartClick() {
-	this.setState({gameStarted: true})
-}
+
 
 class LaunchScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {gameStarted: false}
 	}
+
+	handleStartClick() {
+		this.setState({gameStarted: true})
+    }
+
 	render() {
 		const startClicked = this.state.gameStarted;
 		let screen;
