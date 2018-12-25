@@ -1,12 +1,28 @@
 
 class ConfigurableValuesController {
-  static getGridRowLength() {
-    return 10;
+  getGridRowLength() {
+    return 15;
   }
 
-  static getGridSize() {
+  getGridSize() {
     return 500/this.getGridRowLength();
+  }
+
+  getNumWaterOne() {
+    return 1;
+  }
+
+  getNumWaterTwo() {
+    return 1;
+  }
+
+  getNumFoodOne() {
+    return 1;
+  }
+
+  getNumFoodTwo() {
+    return 1;
   }
 }
 
-export default ConfigurableValuesController;
+export default new ConfigurableValuesController();

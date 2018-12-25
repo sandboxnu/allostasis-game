@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './LaunchScreen.css';
-import Grid from './Grid/Grid.js'
+import GameController from './GameController.js'
 
 class LaunchScreen extends Component {
   render() {
     return (
-      <Grid/>
+      <GameController/>
     );
   }
 }
