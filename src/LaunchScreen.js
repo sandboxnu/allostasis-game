@@ -1,14 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component }, { Button } from 'react';
 import './LaunchScreen.css';
 import Grid from './Grid/Grid.js'
-
-
-function StartButton(props) {
-	return(
-		<button onClick={props.onClick}>
-			Start Game
-		</button>);
-}
 
 
 
@@ -16,6 +8,13 @@ class LaunchScreen extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {gameStarted: false}
+	}
+
+	startButton() {
+		return(
+		<button onClick={this.handleStartClick}>
+			Start Game
+		</button>);
 	}
 
 	handleStartClick() {
@@ -29,7 +28,7 @@ class LaunchScreen extends Component {
 		if (startClicked) {
 			screen = <Grid/>
 		} else {
-			screen = <StartButton onClick={this.handleStartClick}/>;
+			screen = this.startButton();
 		}
 		return (
 			<div className="launchScreen">
