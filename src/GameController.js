@@ -53,8 +53,8 @@ class GameController extends Component {
     var y = 0;
 
     while (numWaterOne > 0 || numWaterTwo > 0 || numFoodOne > 0 || numFoodTwo > 0) {
-      x = Math.round(Math.random() * GRID_LENGTH);
-      y = Math.round(Math.random() * GRID_LENGTH);
+      x = Math.max(Math.min(Math.round(Math.random() * GRID_LENGTH), GRID_LENGTH - 1), 0);
+      y = Math.max(Math.min(Math.round(Math.random() * GRID_LENGTH), GRID_LENGTH -1), 0);
 
       if (numWaterOne > 0) {
         if (grid[x][y] === GlobalConstants.EMPTY_GRID_CELL) {
