@@ -17,7 +17,9 @@ class GameController extends Component {
   constructor() {
     super();
     this.state = {
-      currentGrid: this.generateGrid()
+      currentGrid: this.generateGrid(),
+      playerXPos: ConfigurableValuesController.getInitialXPos(),
+      playerYPos: ConfigurableValuesController.getInitialYPos()
     }
     console.log(this.state.currentGrid);
   }
@@ -97,26 +99,44 @@ class GameController extends Component {
             console.log("ENTER");
             break;
         case LEFT_KEY:
-            console.log("LEFT");
+            this._handlePlayerMovement(-1, 0);
             break;  
         case UP_KEY:
-            console.log("UP");
+            this._handlePlayerMovement(0, -1);
             break;
         case RIGHT_KEY:
-            console.log("RIGHT");
+            this._handlePlayerMovement(1, 0);
             break;
         case DOWN_KEY:
-            console.log("DOWN");
+            this._handlePlayerMovement(0, 1);
             break;    
         default: 
             break;
     }
   }
 
+  _handlePlayerMovement(xMov, yMov) {
+    let curX = this.state.playerXPos;
+    let curY = this.state.playerYPos;
+    curX += xMov;
+    curY += yMov;
+
+    if (curX >= 0 && curX < ConfigurableValuesController.getGridRowLength() 
+        && curY >= 0 && curY < ConfigurableValuesController.getGridRowLength()) {
+          this.setState({
+            playerXPos: curX,
+            playerYPos: curY
+          });
+    }
+    
+  }
+
   render() {
     return (
       <Grid
-        gameGrid = {this.state.currentGrid}/>
+        gameGrid = {this.state.currentGrid}
+        playerX = {this.state.playerXPos}
+        playerY = {this.state.playerYPos}/>
     );
   }
 }

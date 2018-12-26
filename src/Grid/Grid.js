@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import './Grid.css';
 import GridComponent from './GridComponent.js';
 import ConfigurableValuesController from '../ConfigurableValuesController.js';
-import GlobalConstants from '../GlobalConstants';
-import WaterComponent from './WaterComponent';
-import FoodComponent from './FoodComponent';
+import GlobalConstants from '../GlobalConstants.js';
+import WaterComponent from './WaterComponent.js';
+import FoodComponent from './FoodComponent.js';
+import PlayerGrid from './PlayerGrid.js';
 
 class Grid extends Component {
 
@@ -64,10 +65,18 @@ class Grid extends Component {
     return gridObjects;
   }
 
+  renderPlayer() {
+    return <PlayerGrid
+              size = {ConfigurableValuesController.getGridSize()}
+              xPos = {this.props.playerX}
+              yPos = {this.props.playerY}/>;
+  }
+
   render() {
     return (
       <div className="gridOutline">
         {this.renderGrid()}
+        {this.renderPlayer()}
       </div>
     );
   }

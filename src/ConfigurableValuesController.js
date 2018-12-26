@@ -1,7 +1,9 @@
 
+const GRID_OFFSET = 5;
+
 class ConfigurableValuesController {
   getGridRowLength() {
-    return 15;
+    return 11;
   }
 
   getGridSize() {
@@ -23,6 +25,15 @@ class ConfigurableValuesController {
   getNumFoodTwo() {
     return 1;
   }
+
+  getInitialXPos() {
+    return Math.floor(this.getGridRowLength()/2);
+  }
+
+  getInitialYPos() {
+    return Math.floor(this.getGridRowLength()/2);
+  }
+
 }
 
 export default new ConfigurableValuesController();
