@@ -1,6 +1,4 @@
 
-const GRID_OFFSET = 5;
-
 class ConfigurableValuesController {
   getGridRowLength() {
     return 11;
