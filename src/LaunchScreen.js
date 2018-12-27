@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Button } from 'react';
 import './LaunchScreen.css';
-import Grid from './Grid/Grid.js'
-import { Button } from 'react';
-
+import GameController from './GameController';
 
 
 class LaunchScreen extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {gameStarted: false}
-		this.handleStartClick = this.handleStartClick.bind(this);
+    this.state = {gameStarted: false};
 	}
 
 	startButton() {
@@ -19,16 +16,16 @@ class LaunchScreen extends Component {
 		</button>);
 	}
 
-	handleStartClick() {
-		this.setState({gameStarted: true})
-    }
+	handleStartClick = () => {
+		this.setState({gameStarted: true});
+  }
 
 	render() {
 		const startClicked = this.state.gameStarted;
 		let screen;
 
 		if (startClicked) {
-			screen = <Grid/>
+			screen = <GameController/>
 		} else {
 			screen = this.startButton();
 		}
