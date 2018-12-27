@@ -1,7 +1,7 @@
 
 class ConfigurableValuesController {
   getGridRowLength() {
-    return 11;
+    return 15;
   }
 
   getGridSize() {
