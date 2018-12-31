@@ -18,7 +18,7 @@ class LaunchScreen extends Component {
 
 	handleStartClick = () => {
 		this.setState({gameStarted: true});
-  }
+  	}
 
 	render() {
 		const startClicked = this.state.gameStarted;

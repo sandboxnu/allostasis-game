@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Grid from './Grid/Grid.js'
 import ConfigurableValuesController from './ConfigurableValuesController.js';
 import GlobalConstants from './GlobalConstants.js';
+import LifeBarController from './LifeBars/LifeBarController.js'
 
 const ENTER_KEY = 13;
 const LEFT_KEY = 37;
@@ -11,15 +12,20 @@ const DOWN_KEY = 40;
 
 const GRID_LENGTH = ConfigurableValuesController.getGridRowLength();
 
-class GameController extends Component {
-
+class GameController extends Component { 
 
   constructor() {
     super();
+    this.curThirst = ConfigurableValuesController.getInitialThirst();
+    this.curHunger = ConfigurableValuesController.getInitialHunger();
+    this.curLoad = ConfigurableValuesController.getInitialLoad();
     this.state = {
       currentGrid: this.generateGrid(),
       playerXPos: ConfigurableValuesController.getInitialXPos(),
-      playerYPos: ConfigurableValuesController.getInitialYPos()
+      playerYPos: ConfigurableValuesController.getInitialYPos(),
+      hunger: this.curHunger,
+      thirst: this.curThirst,
+      load: this.curLoad
     }
     console.log(this.state.currentGrid);
   }
@@ -115,6 +121,48 @@ class GameController extends Component {
     }
   }
 
+  _adjustThirst(num) {
+    let temp = this.curThirst;
+    temp += num
+    if (temp >= 0) {
+      if (temp > 100) {
+        this.curThirst = 100;
+      } else {
+        this.curThirst = temp;
+      }
+    } else {
+      this.curThirst = 0;
+    }
+  }
+
+  _adjustHunger(num) {
+    let temp = this.curHunger;
+    temp += num
+    if (temp >= 0) {
+      if (temp > 100) {
+        this.curHunger = 100;
+      } else {
+        this.curHunger = temp;
+      }
+    } else {
+      this.curHunger = 0;
+    }
+  }
+
+  _adjustLoad(num) {
+    let temp = this.curLoad;
+    temp += num
+    if (temp >= 0) {
+      if (temp > 100) {
+        this.curLoad = 100;
+      } else {
+        this.curLoad = temp;
+      }
+    } else {
+      this.curLoad = 0;
+    }
+  }
+
   _handlePlayerMovement(xMov, yMov) {
     let curX = this.state.playerXPos;
     let curY = this.state.playerYPos;
@@ -123,20 +171,32 @@ class GameController extends Component {
 
     if (curX >= 0 && curX < ConfigurableValuesController.getGridRowLength() 
         && curY >= 0 && curY < ConfigurableValuesController.getGridRowLength()) {
-          this.setState({
-            playerXPos: curX,
-            playerYPos: curY
-          });
+      this._adjustThirst(-1);
+      this._adjustHunger(-1);
+      this._adjustLoad(1);
+      this.setState({
+        playerXPos: curX,
+        playerYPos: curY,
+        thirst: this.curThirst,
+        hunger: this.curHunger,
+        load: this.curLoad
+      });
     }
     
   }
 
   render() {
     return (
-      <Grid
-        gameGrid = {this.state.currentGrid}
-        playerX = {this.state.playerXPos}
-        playerY = {this.state.playerYPos}/>
+      <div>
+        <Grid
+          gameGrid = {this.state.currentGrid}
+          playerX = {this.state.playerXPos}
+          playerY = {this.state.playerYPos}/>
+        <LifeBarController
+          hunger={this.state.hunger}
+          thirst={this.state.thirst}
+          load={this.state.load}/>
+      </div>
     );
   }
 }
