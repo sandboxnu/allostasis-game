@@ -32,6 +32,17 @@ class ConfigurableValuesController {
     return Math.floor(this.getGridRowLength()/2);
   }
 
+  getInitialHunger() {
+    return 100;
+  }
+
+  getInitialThirst() {
+    return 100;
+  }
+
+  getInitialLoad() {
+    return 0;
+  }
 }
 
 export default new ConfigurableValuesController();

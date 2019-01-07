@@ -3,9 +3,6 @@ import './LaunchScreen.css';
 import GameController from './GameController';
 
 
-
-
-
 class LaunchScreen extends Component {
 	constructor(props) {
 		super(props);
@@ -21,7 +18,7 @@ class LaunchScreen extends Component {
 
 	handleStartClick = () => {
 		this.setState({gameStarted: true});
-  }
+  	}
 
 	render() {
 		const startClicked = this.state.gameStarted;
