@@ -9,7 +9,7 @@ class LoadBar extends Component {
 	render() {
 		return(
 			<div>
-				<GenericProgressBar percentage={this.props.load}/>
+				<GenericProgressBar percentage={this.props.load} name={"Load"}/>
 			</div>)
 	}
 }

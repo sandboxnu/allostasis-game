@@ -1,6 +1,5 @@
 .life-bars {
-	position: relative;
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-start;
+	padding-left: 50px; 
+	-webkit-transform: rotate(-90deg); 
+  	transform: rotate(-90deg);
 }
