@@ -4,4 +4,6 @@
   width: 350px;
   border-radius: 50px;
   border: 1px solid #333;
+  -webkit-transform: rotate(-90deg); 
+  transform: rotate(-90deg);
 }
