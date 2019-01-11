@@ -10,6 +10,12 @@
     
 }
 
-.gridLabel {
+.gridBackground {
+  height: 100%;
+  width: 100%;
+}
 
+.gridImage {
+  height: 100%;
+  width: 100%;
 }
