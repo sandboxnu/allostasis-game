@@ -3,6 +3,7 @@ import Grid from './Grid/Grid.js'
 import ConfigurableValuesController from './ConfigurableValuesController.js';
 import GlobalConstants from './GlobalConstants.js';
 import LifeBarController from './LifeBars/LifeBarController.js'
+import "./GameController.css"
 
 const ENTER_KEY = 13;
 const LEFT_KEY = 37;
@@ -187,7 +188,7 @@ class GameController extends Component {
 
   render() {
     return (
-      <div>
+      <div className="gameController">
         <Grid
           gameGrid = {this.state.currentGrid}
           playerX = {this.state.playerXPos}

@@ -9,7 +9,7 @@ class HungerBar extends Component {
 	render() {
 		return(
 			<div>
-				<GenericProgressBar percentage={this.props.hunger} />
+				<GenericProgressBar percentage={this.props.hunger} name={"Hunger"} />
 			</div>)
 	}
 }

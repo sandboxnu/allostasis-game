@@ -1,7 +1,19 @@
 .generic-progress {
-  position: relative;
-  height: 20px;
+  position: inherit;
+  height: 40px;
   width: 350px;
-  border-radius: 50px;
-  border: 1px solid #333;
+  margin: 50px;
+  border-radius: 5px;
+  border: 5px solid #333;
+}
+
+.genericContainer{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.textBox{
+	-webkit-transform: rotate(90deg); 
+  	transform: rotate(90deg);
 }

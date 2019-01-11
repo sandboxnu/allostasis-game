@@ -9,7 +9,7 @@ class ThirstBar extends Component {
 	render() {
 		return(
 			<div>
-				<GenericProgressBar percentage={this.props.thirst} />
+				<GenericProgressBar percentage={this.props.thirst} name={"Thirst"} />
 			</div>)
 	}
 }
