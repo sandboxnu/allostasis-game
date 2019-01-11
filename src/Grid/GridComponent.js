@@ -3,7 +3,7 @@ import './GridComponent.css';
 
 class GridComponent extends Component {
 
-  renderLabel() {
+  renderBackground() {
     if (!this.label) {
       return null;
     }
@@ -18,7 +18,9 @@ class GridComponent extends Component {
   render() {
     return (
       <div className="gridComponentOutline" style={{width: this.props.size, height: this.props.size}}>
-        {this.renderLabel()}
+        <div className="gridBackground" style={this.extraStyle}>
+          {this.renderBackground()}
+        </div>
       </div>
     );
   }

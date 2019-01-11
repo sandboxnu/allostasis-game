@@ -1,7 +1,33 @@
 
 class ConfigurableValuesController {
+  constructor() {
+    this.gridRowLength = 10;
+    this.numWaterOne = 1;
+    this.numWaterTwo = 1;
+    this.numFoodOne = 1;
+    this.numFoodTwo= 1;
+    this.initalHunger = 100;
+    this.initialThirst = 100;
+    this.initialLoad= 0;
+    this.shouldShowImages = true;
+    this.foodOneImage = null;
+    this.foodTwoImage = null;
+    this.waterOneImage = null;
+    this.waterTwoImage = null;
+
+    this.setupDefaultImages();
+  }
+
+
+  setupDefaultImages() {
+    this.foodOneImage = 'assets/treeone.png';
+    this.foodTwoImage = 'assets/treetwo.png';
+    this.waterOneImage = 'assets/waterone.png';
+    this.waterTwoImage = 'assets/watertwo.png';
+  }
+
   getGridRowLength() {
-    return 15;
+    return this.gridRowLength;
   }
 
   getGridSize() {
@@ -9,19 +35,19 @@ class ConfigurableValuesController {
   }
 
   getNumWaterOne() {
-    return 1;
+    return this.numWaterOne;
   }
 
   getNumWaterTwo() {
-    return 1;
+    return this.numWaterTwo;
   }
 
   getNumFoodOne() {
-    return 1;
+    return this.numFoodOne;
   }
 
   getNumFoodTwo() {
-    return 1;
+    return this.numFoodTwo;
   }
 
   getInitialXPos() {
@@ -33,15 +59,35 @@ class ConfigurableValuesController {
   }
 
   getInitialHunger() {
-    return 100;
+    return this.initalHunger;
   }
 
   getInitialThirst() {
-    return 100;
+    return this.initialThirst;
   }
 
   getInitialLoad() {
-    return 0;
+    return this.initialLoad;
+  }
+
+  shouldShowImages() {
+    return this.shouldShowImages;
+  }
+
+  getWaterOneImage() {
+    return this.waterOneImage;
+  }
+
+  getWaterTwoImage() {
+    return this.waterTwoImage;
+  }
+
+  getFoodOneImage() {
+    return this.foodOneImage;
+  }
+
+  getFoodTwoImage() {
+    return this.foodTwoImage;
   }
 }
 
