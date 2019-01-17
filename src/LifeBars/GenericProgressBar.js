@@ -4,7 +4,7 @@ import './GenericProgressBar.css';
 
 const renderRanges = (bar, bottom, top) => {
 	if (bar === 'Load') {
-		return null;
+		return false;
 	}
 	
 	return (
@@ -16,7 +16,6 @@ const renderRanges = (bar, bottom, top) => {
 }
 
 const GenericProgressBar = (props) => {
-	console.log(props.paddingTop);
 	return(
 		<div className="genericContainer">
 			<div className="textBox" style={{paddingTop: props.paddingTop}}>
