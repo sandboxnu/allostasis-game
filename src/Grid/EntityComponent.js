@@ -1,18 +1,15 @@
 import React from 'react';
 import GridComponent from './GridComponent.js'
-import GlobalConstants from '../GlobalConstants';
-import ConfigurableValuesController from '../ConfigurableValuesController.js';
 import './GridComponent.css';
 
-class WaterComponent extends GridComponent {
+class EntityComponent extends GridComponent {
 
   componentWillMount() {
-    this.label = this.props.waterType === GlobalConstants.WATER_ONE_GRID_CELL ? 'W1' : 'W2';
-    this.background = this.props.waterType === GlobalConstants.WATER_ONE_GRID_CELL ? ConfigurableValuesController.getWaterOneImage() : ConfigurableValuesController.getWaterTwoImage();
-
-    if (!this.shouldRenderImage()){
+    this.label = this.props.name;
+    this.background = this.props.image;
+    if (!this.shouldRenderImage()) {
       this.extraStyle = {
-        backgroundColor: '#40ccff',
+        backgroundColor: '#10b301',
       }
     };
 
@@ -42,4 +39,4 @@ class WaterComponent extends GridComponent {
 
 }
 
-export default WaterComponent;
+export default EntityComponent;
