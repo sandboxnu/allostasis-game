@@ -3,6 +3,7 @@ import ConfigurableValuesController from '../ConfigurableValuesController.js';
 import ThirstBar from './ThirstBar.js';
 import HungerBar from './HungerBar.js';
 import LoadBar from './LoadBar.js';
+import './LifeBarController.css';
 
 class LifeBarController extends Component {
 	constructor(props) {
@@ -13,7 +14,7 @@ class LifeBarController extends Component {
 	render() {
 		console.log("LifeBarController:" + this.props.thirst)
 		return(
-			<div>
+			<div className="life-bars">
 				<ThirstBar thirst={this.props.thirst}/>
 				<HungerBar hunger={this.props.hunger}/>
 				<LoadBar load={this.props.load}/>
