@@ -21,76 +21,40 @@ class GameController extends Component {
     this.curHunger = ConfigurableValuesController.getInitialHunger();
     this.curLoad = ConfigurableValuesController.getInitialLoad();
     this.state = {
-      currentGrid: this.generateGrid(),
+      entities: this._generateEntities(),
       playerXPos: ConfigurableValuesController.getInitialXPos(),
       playerYPos: ConfigurableValuesController.getInitialYPos(),
       hunger: this.curHunger,
       thirst: this.curThirst,
       load: this.curLoad
     }
-    console.log(this.state.currentGrid);
   }
 
-  generateGrid() {
-    var generatedGrid = new Array(GRID_LENGTH);
+  _generateEntities() {
+    let entities = [];
+    this._placeEntity(entities, ConfigurableValuesController.getEntityDataWater1());
+    this._placeEntity(entities, ConfigurableValuesController.getEntityDataWater2());
+    this._placeEntity(entities, ConfigurableValuesController.getEntityDataFood1());
+    this._placeEntity(entities, ConfigurableValuesController.getEntityDataFood2());
+    return entities;
+  }
 
-    for(var i = 0; i < GRID_LENGTH; i++) {
-      generatedGrid[i] = this.generateGridRow();
+  // Creates a new entity with the specified data and random coordinates,
+  // placing it into the array `entities`
+  _placeEntity(entities, new_entity_data) {
+    let random_coord = () => {
+      return Math.max(Math.min(Math.round(Math.random() * GRID_LENGTH), GRID_LENGTH - 1), 0);
+    };
+    let no_placement_conflict = entity => {
+      return x !== entity.x && y !== entity.y;
     }
 
-    generatedGrid = this.insertWaterAndFood(generatedGrid);
-    return generatedGrid;
+    do {
+      var x = random_coord();
+      var y = random_coord();
+      entities.push({x, y, data: new_entity_data});
+    } while(entities.every(no_placement_conflict));
   }
-
-  generateGridRow() {
-    var gridRow = new Array(GRID_LENGTH);
-  
-    for(var i = 0; i < GRID_LENGTH; i++) {
-      gridRow[i] = GlobalConstants.EMPTY_GRID_CELL;
-    }
-
-    return gridRow;
-  }
-
-  insertWaterAndFood(grid) {
-    console.debug(grid);
-    var numWaterOne = ConfigurableValuesController.getNumWaterOne();
-    var numWaterTwo = ConfigurableValuesController.getNumWaterTwo();
-    var numFoodOne = ConfigurableValuesController.getNumFoodOne();
-    var numFoodTwo = ConfigurableValuesController.getNumFoodTwo();
-    var x = 0;
-    var y = 0;
-
-    while (numWaterOne > 0 || numWaterTwo > 0 || numFoodOne > 0 || numFoodTwo > 0) {
-      x = Math.max(Math.min(Math.round(Math.random() * GRID_LENGTH), GRID_LENGTH - 1), 0);
-      y = Math.max(Math.min(Math.round(Math.random() * GRID_LENGTH), GRID_LENGTH -1), 0);
-
-      if (numWaterOne > 0) {
-        if (grid[x][y] === GlobalConstants.EMPTY_GRID_CELL) {
-          grid[x][y] = GlobalConstants.WATER_ONE_GRID_CELL;
-          numWaterOne--;
-        }
-      } else if (numWaterTwo > 0) {
-        if (grid[x][y] === GlobalConstants.EMPTY_GRID_CELL) {
-          grid[x][y] = GlobalConstants.WATER_TWO_GRID_CELL;
-          numWaterTwo--;
-        }
-      } else if (numFoodOne > 0) {
-        if (grid[x][y] === GlobalConstants.EMPTY_GRID_CELL) {
-          grid[x][y] = GlobalConstants.FOOD_ONE_GRID_CELL;
-          numFoodOne--;
-        }
-      } else {
-        if (grid[x][y] === GlobalConstants.EMPTY_GRID_CELL) {
-          grid[x][y] = GlobalConstants.FOOD_TWO_GRID_CELL;
-          numFoodTwo--;
-        }
-      }
-    }
-
-    return grid;
-  }
-
   
   componentWillMount(){
     document.addEventListener("keydown", this._handleKeyDown.bind(this));
@@ -172,8 +136,20 @@ class GameController extends Component {
 
     if (curX >= 0 && curX < ConfigurableValuesController.getGridRowLength() 
         && curY >= 0 && curY < ConfigurableValuesController.getGridRowLength()) {
-      this._adjustThirst(-1);
-      this._adjustHunger(-1);
+      let entitiesHere = this.state.entities.filter(e => e.x === curX && e.y === curY);
+      let entityRewards = entitiesHere.reduce((total, e) => {
+        let rewards = e.data.reward_fn();
+        return {
+          food: total.food + rewards.food,
+          water: total.water + rewards.water,
+        }
+      }, {
+        food: ConfigurableValuesController.getMovementHungerDecay(),
+        water: ConfigurableValuesController.getMovementThirstDecay(),
+      });
+
+      this._adjustThirst(entityRewards.water);
+      this._adjustHunger(entityRewards.food);
       this._adjustLoad(1);
       this.setState({
         playerXPos: curX,
@@ -191,6 +167,7 @@ class GameController extends Component {
       <div className="gameController">
         <Grid
           gameGrid = {this.state.currentGrid}
+          entities = {this.state.entities}
           playerX = {this.state.playerXPos}
           playerY = {this.state.playerYPos}/>
         <LifeBarController
