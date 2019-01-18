@@ -1,6 +1,53 @@
 .launchScreen {
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	
+	align-items: center;	
+}
+
+.launchTitle {
+	margin-top: 3.5em;
+	margin-bottom: 0.25em;
+	font-size: 4em;
+	color: #f7b733
+}
+
+.launchSubtitle {
+	margin-bottom: 1.5em;
+	font-size: 1em;
+	margin: auto;
+	width: 30em;
+	margin-bottom: 2em;
+	color: #393e47;
+}
+
+.launchContainer {
+	margin: auto;
+	text-align: center;
+}
+
+.bottomSubtitle {
+	font-size: 0.75em;
+	color: darkgrey;
+}
+
+.button {
+    background: #f7b733;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.25em;
+    border-radius: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  cursor: pointer;
+}
+
+.button:hover {
+	background: #f8c154;
+	transition: all linear 0.15s;
 }
