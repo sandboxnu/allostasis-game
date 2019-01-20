@@ -1,5 +1,3 @@
-import React from 'react';
-import Fetch from 'react-fetch-component';
 import Axios from 'axios';
 
 const SERVER_URL = 'https://api.sandboxneu.com/allostasis-game';
