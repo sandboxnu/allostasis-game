@@ -1,11 +1,11 @@
 .launchScreen {
 	display: flex;
 	justify-content: center;
-	align-items: center;	
+	align-items: center;
+	height: 100vh;
 }
 
 .launchTitle {
-	margin-top: 3.5em;
 	margin-bottom: 0.25em;
 	font-size: 4em;
 	color: #f7b733
@@ -30,6 +30,38 @@
 	color: darkgrey;
 }
 
+.launchFooter {
+	font-size: 0.75em;
+	color: darkgrey;
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+/* unvisited link */
+.sandboxLink:link {
+	color: #f7b733;
+	text-decoration: none;
+  }
+  
+  /* visited link */
+  .sandboxLink:visited {
+	color: #f7b733;;
+	text-decoration: none;
+  }
+  
+  /* mouse over link */
+  .sandboxLink:hover {
+	text-decoration: underline;
+  }
+  
+  /* selected link */
+  .sandboxLink:active {
+	color: blue;
+  }
+
 .button {
     background: #f7b733;
     border: none;
@@ -51,3 +83,4 @@
 	background: #f8c154;
 	transition: all linear 0.15s;
 }
+

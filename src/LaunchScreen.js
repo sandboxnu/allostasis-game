@@ -15,6 +15,7 @@ class LaunchScreen extends Component {
 				<div class = "launchTitle"> Allostasis Behaviour Study</div>
 				<div class = "launchSubtitle"> This is a placeholder for the subtitle. A simple description of the study can be placed here.</div>
 				{this.renderStartButton()}
+				<div class = "launchFooter"> Developed by <a class = "sandboxLink" href="http://www.sandboxneu.com/"> Sandbox Research Group </a> for David Melnikoff.</div>
 			</div>	
 		);
 	}
