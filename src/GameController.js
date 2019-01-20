@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Grid from './Grid/Grid.js'
 import ConfigurableValuesController from './ConfigurableValuesController.js';
 import GlobalConstants from './GlobalConstants.js';
-import LifeBarController from './LifeBars/LifeBarController.js'
-import "./GameController.css"
+import LifeBarController from './LifeBars/LifeBarController.js';
+import ServerUtils from './ServerUtils';
+import "./GameController.css";
 
 const ENTER_KEY = 13;
 const LEFT_KEY = 37;
@@ -17,6 +18,7 @@ class GameController extends Component {
 
   constructor() {
     super();
+    this.hasSentData = false;
     this.curThirst = ConfigurableValuesController.getInitialThirst();
     this.curHunger = ConfigurableValuesController.getInitialHunger();
     this.curLoad = ConfigurableValuesController.getInitialLoad();
@@ -172,6 +174,10 @@ class GameController extends Component {
   }
 
   renderEndGame() {
+    if (!this.hasSentData) {
+      //TODO: Send Data to Server Here
+      this.hasSentData = true;
+    }
     return (
         <div>
           GAME OVER
