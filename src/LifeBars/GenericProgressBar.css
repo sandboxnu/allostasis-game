@@ -29,7 +29,6 @@
   width: 3px;
   position: relative;
   top: -40px;
-  left: 50%;
 }
 
 .range-top{
@@ -38,5 +37,4 @@
   width: 3px;
   position: relative;
   top: -80px;
-  left: 80%;
 }
