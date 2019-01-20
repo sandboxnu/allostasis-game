@@ -7,7 +7,9 @@ class ThirstBar extends Component {
 			<div>
 				<GenericProgressBar percentage={this.props.thirst}
 									name={"Thirst"}
-									paddingTop={5}/>
+									paddingTop={5}
+									rangeBottom={this.props.rangeBottom}
+									rangeTop={this.props.rangeTop}/>
 			</div>)
 	}
 }

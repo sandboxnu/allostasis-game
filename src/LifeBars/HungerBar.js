@@ -7,7 +7,9 @@ class HungerBar extends Component {
 			<div>
 				<GenericProgressBar percentage={this.props.hunger}
 									name={"Hunger"}
-									paddingTop={11} />
+									paddingTop={11}
+									rangeBottom={this.props.rangeBottom}
+									rangeTop={this.props.rangeTop} />
 			</div>)
 	}
 }

@@ -3,8 +3,6 @@ const gaussian = require('gaussian');
 class ConfigurableValuesController {
   constructor() {
     this.gridRowLength = 10;
-    this.initalHunger = 100;
-    this.initialThirst = 100;
     this.initialLoad = 0;
     this.meanWater1 = 2;
     this.varianceWater1 = 1;
@@ -21,6 +19,10 @@ class ConfigurableValuesController {
     this.foodTwoImage = null;
     this.waterOneImage = null;
     this.waterTwoImage = null;
+    this.hungerUpperBound = 80;
+    this.hungerLowerBound = 60;
+    this.thirstUpperBound = 75;
+    this.thirstLowerBound = 55;
 
     this.setupDefaultImages();
   }
@@ -112,12 +114,28 @@ class ConfigurableValuesController {
     return Math.floor(this.getGridRowLength()/2);
   }
 
+  getHungerLowerBound() {
+    return this.hungerLowerBound;
+  }
+
+  getHungerUpperBound() {
+    return this.hungerUpperBound;
+  }
+
   getInitialHunger() {
-    return this.initalHunger;
+    return (this.getHungerLowerBound() + this.getHungerUpperBound()) / 2;
+  }
+
+  getThirstLowerBound() {
+    return this.thirstLowerBound;
+  }
+
+  getThirstUpperBound() {
+    return this.thirstUpperBound;
   }
 
   getInitialThirst() {
-    return this.initialThirst;
+    return (this.getThirstLowerBound() + this.getThirstUpperBound()) / 2;
   }
 
   getInitialLoad() {

@@ -20,6 +20,11 @@ class GameController extends Component {
     this.curThirst = ConfigurableValuesController.getInitialThirst();
     this.curHunger = ConfigurableValuesController.getInitialHunger();
     this.curLoad = ConfigurableValuesController.getInitialLoad();
+    this.hungerLowerBound = ConfigurableValuesController.getHungerLowerBound();
+    this.hungerUpperBound = ConfigurableValuesController.getHungerUpperBound();
+    this.thirstLowerBound = ConfigurableValuesController.getThirstLowerBound();
+    this.thirstUpperBound = ConfigurableValuesController.getThirstUpperBound();
+
     this.state = {
       entities: this._generateEntities(),
       playerXPos: ConfigurableValuesController.getInitialXPos(),
@@ -162,7 +167,23 @@ class GameController extends Component {
     
   }
 
+  checkForEndGame() {
+    return this.state.hunger >= 100 || this.state.hunger <= 0 || this.state.thirst >= 100 || this.state.thirst <=0 || this.state.load >= 100;
+  }
+
+  renderEndGame() {
+    return (
+        <div>
+          GAME OVER
+        </div>
+
+      );
+  }
+
   render() {
+    if (this.checkForEndGame()) {
+      return this.renderEndGame();
+    }
     return (
       <div className="gameController">
         <Grid
@@ -173,7 +194,11 @@ class GameController extends Component {
         <LifeBarController
           hunger={this.state.hunger}
           thirst={this.state.thirst}
-          load={this.state.load}/>
+          load={this.state.load}
+          hungerRangeBottom={this.hungerLowerBound}
+          hungerRangeTop={this.hungerUpperBound}
+          thirstRangeBottom={this.thirstLowerBound}
+          thirstRangeTop={this.thirstUpperBound}/>
       </div>
     );
   }
