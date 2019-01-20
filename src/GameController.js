@@ -167,7 +167,23 @@ class GameController extends Component {
     
   }
 
+  checkForEndGame() {
+    return this.state.hunger >= 100 || this.state.hunger <= 0 || this.state.thirst >= 100 || this.state.thirst <=0 || this.state.load >= 100;
+  }
+
+  renderEndGame() {
+    return (
+        <div>
+          GAME OVER
+        </div>
+
+      );
+  }
+
   render() {
+    if (this.checkForEndGame()) {
+      return this.renderEndGame();
+    }
     return (
       <div className="gameController">
         <Grid
