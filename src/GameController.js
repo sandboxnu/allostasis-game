@@ -26,6 +26,15 @@ class GameController extends Component {
     this.hungerUpperBound = ConfigurableValuesController.getHungerUpperBound();
     this.thirstLowerBound = ConfigurableValuesController.getThirstLowerBound();
     this.thirstUpperBound = ConfigurableValuesController.getThirstUpperBound();
+    this.tick = this.tick.bind(this);
+    this.generateStateInfo = this.generateStateInfo.bind(this);
+    this.actionEnum = {
+      Start : "start",
+      MovedLeft : "movedLeft",
+      MovedRight : "movedRight",
+      MovedUp : "movedUp",
+      MovedDown : "movedDown"
+    }
 
     this.state = {
       entities: this._generateEntities(),
@@ -33,7 +42,9 @@ class GameController extends Component {
       playerYPos: ConfigurableValuesController.getInitialYPos(),
       hunger: this.curHunger,
       thirst: this.curThirst,
-      load: this.curLoad
+      load: this.curLoad,
+      curTick: 0,
+      lastAction: this.actionEnum.Start
     }
   }
 
@@ -77,16 +88,16 @@ class GameController extends Component {
             console.log("ENTER");
             break;
         case LEFT_KEY:
-            this._handlePlayerMovement(-1, 0);
+            this._handlePlayerMovement(-1, 0, this.actionEnum.MovedLeft);
             break;  
         case UP_KEY:
-            this._handlePlayerMovement(0, -1);
+            this._handlePlayerMovement(0, -1, this.actionEnum.MovedUp);
             break;
         case RIGHT_KEY:
-            this._handlePlayerMovement(1, 0);
+            this._handlePlayerMovement(1, 0, this.actionEnum.MovedRight);
             break;
         case DOWN_KEY:
-            this._handlePlayerMovement(0, 1);
+            this._handlePlayerMovement(0, 1, this.actionEnum.MovedDown);
             break;    
         default: 
             break;
@@ -135,7 +146,17 @@ class GameController extends Component {
     }
   }
 
-  _handlePlayerMovement(xMov, yMov) {
+  componentDidMount() {
+    this.interval = setInterval(this.tick, 1000);
+  }
+
+  tick() {
+    this.setState({
+      curTick: this.state.curTick + 1
+    });
+  }
+
+  _handlePlayerMovement(xMov, yMov, move) {
     let curX = this.state.playerXPos;
     let curY = this.state.playerYPos;
     curX += xMov;
@@ -163,10 +184,23 @@ class GameController extends Component {
         playerYPos: curY,
         thirst: this.curThirst,
         hunger: this.curHunger,
-        load: this.curLoad
+        load: this.curLoad,
+        lastAction: move
       });
     }
     
+  }
+
+  generateStateInfo() {
+    let stateInfo = {
+      tick : this.state.curTick,
+      playerPos: [this.state.playerXPos, this.state.playerYPos],
+      lastAction: this.state.lastAction,
+      hunger: this.curHunger,
+      thirst: this.curThirst,
+      load: this.curLoad
+    }
+    return stateInfo;
   }
 
   checkForEndGame() {
@@ -190,6 +224,9 @@ class GameController extends Component {
     if (this.checkForEndGame()) {
       return this.renderEndGame();
     }
+    console.log(this.state.curTick);
+    console.log(this.state.lastAction);
+    console.log(this.generateStateInfo());
     return (
       <div className="gameController">
         <Grid
