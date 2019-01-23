@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import GenericProgressBar from './GenericProgressBar.js';
 
 class ThirstBar extends Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
 		return(
 			<div>
-				<GenericProgressBar percentage={this.props.thirst} name={"Thirst"} />
+				<GenericProgressBar percentage={this.props.thirst}
+									name={"Thirst"}
+									paddingTop={5}
+									rangeBottom={this.props.rangeBottom}
+									rangeTop={this.props.rangeTop}/>
 			</div>)
 	}
 }

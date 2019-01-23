@@ -15,8 +15,12 @@ class LifeBarController extends Component {
 		console.log("LifeBarController:" + this.props.thirst)
 		return(
 			<div className="life-bars">
-				<ThirstBar thirst={this.props.thirst}/>
-				<HungerBar hunger={this.props.hunger}/>
+				<ThirstBar thirst={this.props.thirst}
+							rangeBottom={this.props.thirstRangeBottom}
+							rangeTop={this.props.thirstRangeTop}/>
+				<HungerBar hunger={this.props.hunger}
+						   rangeBottom={this.props.hungerRangeBottom}
+						   rangeTop={this.props.hungerRangeTop}/>
 				<LoadBar load={this.props.load}/>
 			</div>)
 

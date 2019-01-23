@@ -9,11 +9,23 @@ class LaunchScreen extends Component {
     this.state = {gameStarted: false};
 	}
 
-	startButton() {
+	renderLaunchScreen(){
+		return (
+			<div class = "launchContainer">
+				<div class = "launchTitle"> Allostasis Behaviour Study</div>
+				<div class = "launchSubtitle"> This is a placeholder for the subtitle. A simple description of the study can be placed here.</div>
+				{this.renderStartButton()}
+				<div class = "launchFooter"> Developed by <a class = "sandboxLink" href="http://www.sandboxneu.com/"> Sandbox Research Group </a> for David Melnikoff.</div>
+			</div>	
+		);
+	}
+
+	renderStartButton() {
 		return(
-		<button onClick={this.handleStartClick}>
-			Start Game
-		</button>);
+			<div>
+				<a class="button" onClick={this.handleStartClick} role="button" id = "player-begin">Start Study</a>
+				<div class = "bottomSubtitle"> Click on the button above to start!</div>
+			</div>);
 	}
 
 	handleStartClick = () => {
@@ -27,7 +39,7 @@ class LaunchScreen extends Component {
 		if (startClicked) {
 			screen = <GameController/>
 		} else {
-			screen = this.startButton();
+			screen = this.renderLaunchScreen();
 		}
 		return (
 			<div className="launchScreen">

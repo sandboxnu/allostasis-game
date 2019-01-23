@@ -2,5 +2,85 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	
+	height: 100vh;
 }
+
+.launchTitle {
+	margin-bottom: 0.25em;
+	font-size: 4em;
+	color: #f7b733
+}
+
+.launchSubtitle {
+	margin-bottom: 1.5em;
+	font-size: 1em;
+	margin: auto;
+	width: 30em;
+	margin-bottom: 2em;
+	color: #393e47;
+}
+
+.launchContainer {
+	margin: auto;
+	text-align: center;
+}
+
+.bottomSubtitle {
+	font-size: 0.75em;
+	color: darkgrey;
+}
+
+.launchFooter {
+	font-size: 0.75em;
+	color: darkgrey;
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+/* unvisited link */
+.sandboxLink:link {
+	color: #f7b733;
+	text-decoration: none;
+  }
+  
+  /* visited link */
+  .sandboxLink:visited {
+	color: #f7b733;;
+	text-decoration: none;
+  }
+  
+  /* mouse over link */
+  .sandboxLink:hover {
+	text-decoration: underline;
+  }
+  
+  /* selected link */
+  .sandboxLink:active {
+	color: blue;
+  }
+
+.button {
+    background: #f7b733;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.25em;
+    border-radius: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  cursor: pointer;
+}
+
+.button:hover {
+	background: #f8c154;
+	transition: all linear 0.15s;
+}
+
