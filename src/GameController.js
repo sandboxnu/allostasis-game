@@ -28,13 +28,6 @@ class GameController extends Component {
     this.thirstUpperBound = ConfigurableValuesController.getThirstUpperBound();
     this.tick = this.tick.bind(this);
     this.generateStateInfo = this.generateStateInfo.bind(this);
-    this.actionEnum = {
-      Start : "start",
-      MovedLeft : "movedLeft",
-      MovedRight : "movedRight",
-      MovedUp : "movedUp",
-      MovedDown : "movedDown"
-    }
 
     this.state = {
       entities: this._generateEntities(),
@@ -44,7 +37,7 @@ class GameController extends Component {
       thirst: this.curThirst,
       load: this.curLoad,
       curTick: 0,
-      lastAction: this.actionEnum.Start
+      lastAction: GlobalConstants.actionEnum.Start
     }
   }
 
@@ -80,6 +73,7 @@ class GameController extends Component {
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this._handleKeyDown.bind(this));
+    clearInterval(this.interval)
   }
 
   _handleKeyDown = (event) => {
@@ -88,16 +82,16 @@ class GameController extends Component {
             console.log("ENTER");
             break;
         case LEFT_KEY:
-            this._handlePlayerMovement(-1, 0, this.actionEnum.MovedLeft);
+            this._handlePlayerMovement(-1, 0, GlobalConstants.actionEnum.MovedLeft);
             break;  
         case UP_KEY:
-            this._handlePlayerMovement(0, -1, this.actionEnum.MovedUp);
+            this._handlePlayerMovement(0, -1, GlobalConstants.actionEnum.MovedUp);
             break;
         case RIGHT_KEY:
-            this._handlePlayerMovement(1, 0, this.actionEnum.MovedRight);
+            this._handlePlayerMovement(1, 0, GlobalConstants.actionEnum.MovedRight);
             break;
         case DOWN_KEY:
-            this._handlePlayerMovement(0, 1, this.actionEnum.MovedDown);
+            this._handlePlayerMovement(0, 1, GlobalConstants.actionEnum.MovedDown);
             break;    
         default: 
             break;
@@ -192,15 +186,14 @@ class GameController extends Component {
   }
 
   generateStateInfo() {
-    let stateInfo = {
+    return({
       tick : this.state.curTick,
       playerPos: [this.state.playerXPos, this.state.playerYPos],
       lastAction: this.state.lastAction,
       hunger: this.curHunger,
       thirst: this.curThirst,
       load: this.curLoad
-    }
-    return stateInfo;
+    });
   }
 
   checkForEndGame() {
@@ -221,12 +214,12 @@ class GameController extends Component {
   }
 
   render() {
-    if (this.checkForEndGame()) {
-      return this.renderEndGame();
-    }
     console.log(this.state.curTick);
     console.log(this.state.lastAction);
     console.log(this.generateStateInfo());
+    if (this.checkForEndGame()) {
+      return this.renderEndGame();
+    }
     return (
       <div className="gameController">
         <Grid
