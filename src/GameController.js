@@ -214,9 +214,6 @@ class GameController extends Component {
   }
 
   render() {
-    console.log(this.state.curTick);
-    console.log(this.state.lastAction);
-    console.log(this.generateStateInfo());
     if (this.checkForEndGame()) {
       return this.renderEndGame();
     }
