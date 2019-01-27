@@ -187,6 +187,7 @@ class GameController extends Component {
 
   generateStateInfo() {
     return({
+      configureableValues: ConfigurableValuesController.getConfigurableValues(),
       tick : this.state.curTick,
       playerPos: [this.state.playerXPos, this.state.playerYPos],
       lastAction: this.state.lastAction,
