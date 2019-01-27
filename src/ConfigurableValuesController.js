@@ -161,6 +161,27 @@ class ConfigurableValuesController {
   getFoodTwoImage() {
     return this.foodTwoImage;
   }
+
+  getConfigurableValues() {
+    return  ({
+    rowLength: this.gridRowLength,
+    initialLoad: this.initialLoad,
+    meanWater1: this.meanWater1,
+    varianceWater1: this.varianceWater1,
+    meanWater2: this.meanWater2,
+    varianceWater2: this.varianceWater2,
+    meanFood1: this.meanFood1,
+    varianceFood1: this.varianceFood1,
+    meanFood2: this.meanFood2,
+    varianceFood2: this.varianceFood2,
+    movementThirstDecay: this.movementThirstDecay,
+    movementHungerDecay: this.movementHungerDecay,
+    hungerUpperBound: this.hungerUpperBound,
+    hungerLowerBound: this.hungerLowerBound,
+    thirstUpperBound: this.thirstUpperBound,
+    thirstLowerBound: this.thirstLowerBound
+    });
+  }
 }
 
 export default new ConfigurableValuesController();
