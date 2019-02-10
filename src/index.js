@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import LaunchScreen from './LaunchScreen';
+import App from './App';
 
-ReactDOM.render(<LaunchScreen />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
