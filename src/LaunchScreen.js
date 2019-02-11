@@ -1,12 +1,27 @@
 import React, { Component, Button } from 'react';
 import './LaunchScreen.css';
 import GameController from './GameController';
+import Axios from 'axios';
+import ServerUtils from './ServerUtils';
+import ConfigurableValuesController from './ConfigurableValuesController';
 
 
 class LaunchScreen extends Component {
 	constructor(props) {
 		super(props);
-    this.state = {gameStarted: false};
+    this.state = {
+			gameStarted: false,
+			hasConfigLoaded: false,
+		};
+	}
+
+	componentWillMount() {
+		Axios.get(ServerUtils.getServerUrl()+'/experiment')
+		.then(result => {ConfigurableValuesController.update(result.data)})
+		.catch(error => {ConfigurableValuesController.update(ServerUtils.sendDefaultJson())});
+		this.setState({
+			hasConfigLoaded: true
+		})
 	}
 
 	renderLaunchScreen(){
@@ -21,16 +36,20 @@ class LaunchScreen extends Component {
 	}
 
 	renderStartButton() {
+		let buttonBg = this.state.hasConfigLoaded ? {background: '#f7b733'} : {background: '#fbdb99'};
+		let buttonTxt = this.state.hasConfigLoaded ? "Click on the button above to start!" : "Please wait while the game loads!"
 		return(
 			<div>
-				<a class="button" onClick={this.handleStartClick} role="button" id = "player-begin">Start Study</a>
-				<div class = "bottomSubtitle"> Click on the button above to start!</div>
+				<a class="button" onClick={this.handleStartClick} role="button" id = "player-begin" style={buttonBg}> Start Study</a>
+				<div class = "bottomSubtitle"> {buttonTxt} </div>
 			</div>);
 	}
 
 	handleStartClick = () => {
-		this.setState({gameStarted: true});
-  	}
+		if (this.state.hasConfigLoaded) {
+			this.setState({gameStarted: true});
+		}
+  }
 
 	render() {
 		const startClicked = this.state.gameStarted;

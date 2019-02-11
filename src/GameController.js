@@ -28,6 +28,7 @@ class GameController extends Component {
     this.thirstUpperBound = ConfigurableValuesController.getThirstUpperBound();
     this.tick = this.tick.bind(this);
     this.generateStateInfo = this.generateStateInfo.bind(this);
+    this.data = []
 
     this.state = {
       entities: this._generateEntities(),
@@ -79,7 +80,6 @@ class GameController extends Component {
   _handleKeyDown = (event) => {
     switch( event.keyCode ) {
         case ENTER_KEY:
-            console.log("ENTER");
             break;
         case LEFT_KEY:
             this._handlePlayerMovement(-1, 0, GlobalConstants.actionEnum.MovedLeft);
@@ -96,6 +96,7 @@ class GameController extends Component {
         default: 
             break;
     }
+    this.data.push(this.generateStateInfo())
   }
 
   _adjustThirst(num) {
@@ -187,7 +188,6 @@ class GameController extends Component {
 
   generateStateInfo() {
     return({
-      configureableValues: ConfigurableValuesController.getConfigurableValues(),
       tick : this.state.curTick,
       playerPos: [this.state.playerXPos, this.state.playerYPos],
       lastAction: this.state.lastAction,
@@ -203,7 +203,11 @@ class GameController extends Component {
 
   renderEndGame() {
     if (!this.hasSentData) {
-      //TODO: Send Data to Server Here
+      let finalData ={
+        configValues: ConfigurableValuesController.getConfigurableValues(),
+        data: this.data
+      };
+      ServerUtils.sendData(finalData)
       this.hasSentData = true;
     }
     return (

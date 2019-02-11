@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const gaussian = require('gaussian');
 
 class ConfigurableValuesController {
@@ -25,6 +27,34 @@ class ConfigurableValuesController {
     this.thirstLowerBound = 55;
 
     this.setupDefaultImages();
+  }
+
+  update(configValues) {
+    this.gridRowLength = _.get(configValues, 'gridRowLength', 10);
+    this.initialLoad = _.get(configValues, "initialLoad", 0);
+    this.meanWater1 = _.get(configValues, "meanWater1", 2);
+    this.varianceWater1 = _.get(configValues, "varianceWater1", 1);
+    this.meanWater2 = _.get(configValues, "meanWater2", 4);
+    this.varianceWater2 = _.get(configValues, "varianceWater2", 3);
+    this.meanFood1 = _.get(configValues, "meanFood1", 2);
+    this.varianceFood1 = _.get(configValues, "varianceFood1", 1);
+    this.meanFood2 = _.get(configValues, "meanFood2", 4);
+    this.varianceFood2 = _.get(configValues, "varianceFood2", 3);
+    this.movementThirstDecay = _.get(configValues, "movementThirstDecay", -1);
+    this.movementHungerDecay = _.get(configValues, "movementHungerDecay", -1);
+    this.shouldShowImages = _.get(configValues, "shouldShowImages", true);
+    this.foodOneImage = _.get(configValues, "foodOneImage", null);
+    this.foodTwoImage = _.get(configValues, "foodTwoImage", null);
+    this.waterOneImage = _.get(configValues, "waterOneImage", null);
+    this.waterTwoImage = _.get(configValues, "waterTwoImage", null);
+    this.hungerUpperBound = _.get(configValues, "hungerUpperBound", 80);
+    this.hungerLowerBound = _.get(configValues, "hungerLowerBound", 60);
+    this.thirstUpperBound = _.get(configValues, "thirstUpperBound", 75);
+    this.thirstLowerBound = _.get(configValues, "thirstLowerBound", 55);
+
+    if (this.foodOneImage == null || this.foodTwoImage == null || this.waterOneImage == null || this.waterTwoImage == null) {
+      this.setupDefaultImages();
+    }
   }
 
   getEntityDataWater1() {
