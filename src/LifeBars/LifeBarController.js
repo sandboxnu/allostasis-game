@@ -6,13 +6,7 @@ import LoadBar from './LoadBar.js';
 import './LifeBarController.css';
 
 class LifeBarController extends Component {
-	constructor(props) {
-		super(props);
-		console.log("constructing LifeBarController");
-	}
-
 	render() {
-		console.log("LifeBarController:" + this.props.thirst)
 		return(
 			<div className="life-bars">
 				<ThirstBar thirst={this.props.thirst}
