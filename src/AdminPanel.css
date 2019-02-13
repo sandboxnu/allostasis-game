@@ -1,0 +1,30 @@
+#root__description {
+    font-size: 1.3em;
+}
+fieldset#root {
+    padding: 1em;
+    border-radius: 1em;
+    border: .1em solid #ddd;
+}
+.field {
+    padding: 1em;
+}
+.control-label {
+    font-size: 1.3em;
+}
+.required {
+    color: #f88;
+    margin-left: 0.2em;
+}
+.field-description {
+    color: #444;
+    margin: 0em;
+}
+.btn {
+    margin: 1em;
+    padding: 0.8em 2em;
+    font-size: 1.3em;
+}
+.btn:after {
+    content: " values";
+}
