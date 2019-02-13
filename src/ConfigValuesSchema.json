@@ -1,0 +1,88 @@
+{
+    "description": "Allostasis game configuration values",
+    "type": "object",
+    "properties": {
+        "gridRowLength": {
+            "type": "integer",
+            "description": "The width and height of the game grid"
+        },
+        "initialLoad": {
+            "type": "number",
+            "description": "Starting value for player's load (out of 100)"
+        },
+        "meanWater1": {
+            "type": "number",
+            "description": "Mean reward from water 1"
+        },
+        "varianceWater1": {
+            "type": "number",
+            "description": "Variance of reward from water 1"
+        },
+        "meanWater2": {
+            "type": "number",
+            "description": "Mean reward from water 2"
+        },
+        "varianceWater2": {
+            "type": "number",
+            "description": "Variance of reward from water 2"
+        },
+        "meanFood1": {
+            "type": "number",
+            "description": "Mean reward from food 1"
+        },
+        "varianceFood1": {
+            "type": "number",
+            "description": "Variance of reward from food 1"
+        },
+        "meanFood2": {
+            "type": "number",
+            "description": "Mean reward from food 2"
+        },
+        "varianceFood2": {
+            "type": "number",
+            "description": "Variance of reward from food 2"
+        },
+        "movementThirstDecay": {
+            "type": "number",
+            "description": "Change thirst by this much on every game tick"
+        },
+        "movementHungerDecay": {
+            "type": "number",
+            "description": "Change hunger by this much on every game tick"
+        },
+        "hungerUpperBound": {
+            "type": "number",
+            "description": "The upper bound of the ideal range for hunger (out of 100)"
+        },
+        "hungerLowerBound": {
+            "type": "number",
+            "description": "The lower bound of the ideal range for hunger (out of 100)"
+        },
+        "thirstUpperBound": {
+            "type": "number",
+            "description": "The upper bound of the ideal range for thirst (out of 100)"
+        },
+        "thirstLowerBound": {
+            "type": "number",
+            "description": "The lower bound of the ideal range for thirst (out of 100)"
+        }
+    },
+    "required": [
+        "gridRowLength",
+        "initialLoad",
+        "meanWater1",
+        "varianceWater1",
+        "meanWater2",
+        "varianceWater2",
+        "meanFood1",
+        "varianceFood1",
+        "meanFood2",
+        "varianceFood2",
+        "movementThirstDecay",
+        "movementHungerDecay",
+        "hungerUpperBound",
+        "hungerLowerBound",
+        "thirstUpperBound",
+        "thirstLowerBound"
+    ]
+}
