@@ -12,13 +12,14 @@ const UP_KEY = 38;
 const RIGHT_KEY = 39;
 const DOWN_KEY = 40;
 
-const GRID_LENGTH = ConfigurableValuesController.getGridRowLength();
 
 class GameController extends Component { 
 
   constructor() {
     super();
     this.hasSentData = false;
+    this.rowLength = ConfigurableValuesController.getGridRowLength();
+    this.columnLength = ConfigurableValuesController.getGridColumnLength();
     this.curThirst = ConfigurableValuesController.getInitialThirst();
     this.curHunger = ConfigurableValuesController.getInitialHunger();
     this.curLoad = ConfigurableValuesController.getInitialLoad();
@@ -54,16 +55,18 @@ class GameController extends Component {
   // Creates a new entity with the specified data and random coordinates,
   // placing it into the array `entities`
   _placeEntity(entities, new_entity_data) {
-    let random_coord = () => {
-      return Math.max(Math.min(Math.round(Math.random() * GRID_LENGTH), GRID_LENGTH - 1), 0);
+    let random_coord = (upperLimit) => {
+      console.log("Upper limit " + upperLimit)
+      return Math.max(Math.min(Math.round(Math.random() * upperLimit), upperLimit - 1), 0);
     };
     let no_placement_conflict = entity => {
       return x !== entity.x && y !== entity.y;
     }
 
     do {
-      var x = random_coord();
-      var y = random_coord();
+      var x = random_coord(this.rowLength);
+      var y = random_coord(this.columnLength);
+      console.log(y)
       entities.push({x, y, data: new_entity_data});
     } while(entities.every(no_placement_conflict));
   }
@@ -157,8 +160,8 @@ class GameController extends Component {
     curX += xMov;
     curY += yMov;
 
-    if (curX >= 0 && curX < ConfigurableValuesController.getGridRowLength() 
-        && curY >= 0 && curY < ConfigurableValuesController.getGridRowLength()) {
+    if (curX >= 0 && curX < this.rowLength
+        && curY >= 0 && curY < this.columnLength) {
       let entitiesHere = this.state.entities.filter(e => e.x === curX && e.y === curY);
       let entityRewards = entitiesHere.reduce((total, e) => {
         let rewards = e.data.reward_fn();

@@ -4,7 +4,11 @@
     "properties": {
         "gridRowLength": {
             "type": "integer",
-            "description": "The width and height of the game grid"
+            "description": "The number of rows in the grid"
+        },
+        "gridColumnLength": {
+            "type": "integer",
+            "description": "The number of columns in the grid"
         },
         "initialLoad": {
             "type": "number",
@@ -69,6 +73,7 @@
     },
     "required": [
         "gridRowLength",
+        "gridColumnLength",
         "initialLoad",
         "meanWater1",
         "varianceWater1",
