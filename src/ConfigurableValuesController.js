@@ -153,7 +153,6 @@ class ConfigurableValuesController {
 
   getGridSize() {
     var maxRowsColumns = Math.max(this.getGridColumnLength(), this.getGridRowLength())
-    console.log()
     return GRID_SIZE_CONSTANT / maxRowsColumns;
   }
 

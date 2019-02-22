@@ -56,7 +56,6 @@ class GameController extends Component {
   // placing it into the array `entities`
   _placeEntity(entities, new_entity_data) {
     let random_coord = (upperLimit) => {
-      console.log("Upper limit " + upperLimit)
       return Math.max(Math.min(Math.round(Math.random() * upperLimit), upperLimit - 1), 0);
     };
     let no_placement_conflict = entity => {
@@ -66,7 +65,6 @@ class GameController extends Component {
     do {
       var x = random_coord(this.rowLength);
       var y = random_coord(this.columnLength);
-      console.log(y)
       entities.push({x, y, data: new_entity_data});
     } while(entities.every(no_placement_conflict));
   }
