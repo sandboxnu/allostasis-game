@@ -29,6 +29,7 @@ class GameController extends Component {
     this.tick = this.tick.bind(this);
     this.generateStateInfo = this.generateStateInfo.bind(this);
     this.data = []
+    this.loadRate = ConfigurableValuesController.getLoadRate();
 
     this.state = {
       entities: this._generateEntities(),
@@ -151,6 +152,22 @@ class GameController extends Component {
     });
   }
 
+  _loadIncrease() {
+    let thirstSubOptimal = (this.curThirst < this.thirstLowerBound) || (this.curThirst > this.thirstUpperBound);
+    let hungerSubOptimal = (this.curHunger < this.hungerLowerBound) || (this.curHunger > this.hungerUpperBound);
+
+    if (thirstSubOptimal && hungerSubOptimal) {
+       console.log("both subOptimal")
+      return 2 * this.loadRate;
+    } 
+    if (thirstSubOptimal || hungerSubOptimal) {
+      console.log("one subOptimal")
+      return this.loadRate;
+    }
+    console.log("none subOptimal")
+    return 0;
+  }
+
   _handlePlayerMovement(xMov, yMov, move) {
     let curX = this.state.playerXPos;
     let curY = this.state.playerYPos;
@@ -170,10 +187,10 @@ class GameController extends Component {
         food: ConfigurableValuesController.getMovementHungerDecay(),
         water: ConfigurableValuesController.getMovementThirstDecay(),
       });
-
+      let loadDelta = this._loadIncrease();
       this._adjustThirst(entityRewards.water);
       this._adjustHunger(entityRewards.food);
-      this._adjustLoad(1);
+      this._adjustLoad(loadDelta);
       this.setState({
         playerXPos: curX,
         playerYPos: curY,

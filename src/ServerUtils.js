@@ -29,6 +29,7 @@ class ServerUtils {
     return {
       "gridRowLength": 10,
       "initialLoad": 0,
+      "loadRate": 2,
       "meanWater1": 2,
       "varianceWater1": 1,
       "meanWater2": 4,

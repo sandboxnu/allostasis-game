@@ -5,7 +5,8 @@ const gaussian = require('gaussian');
 class ConfigurableValuesController {
   constructor() {
     this.gridRowLength = 10;
-    this.initialLoad = 0;
+    this.initialLoad = 0; 
+    this.loadRate = 2;
     this.meanWater1 = 2;
     this.varianceWater1 = 1;
     this.meanWater2 = 4;
@@ -32,6 +33,7 @@ class ConfigurableValuesController {
   update(configValues) {
     this.gridRowLength = _.get(configValues, 'gridRowLength', 10);
     this.initialLoad = _.get(configValues, "initialLoad", 0);
+    this.loadRate = _.get(configValues, "loadRate", 2)
     this.meanWater1 = _.get(configValues, "meanWater1", 2);
     this.varianceWater1 = _.get(configValues, "varianceWater1", 1);
     this.meanWater2 = _.get(configValues, "meanWater2", 4);
@@ -172,6 +174,10 @@ class ConfigurableValuesController {
     return this.initialLoad;
   }
 
+  getLoadRate() {
+    return this.loadRate;
+  }
+
   shouldShowImages() {
     return this.shouldShowImages;
   }
@@ -196,6 +202,7 @@ class ConfigurableValuesController {
     return  ({
     rowLength: this.gridRowLength,
     initialLoad: this.initialLoad,
+    loadRate: this.loadRate,
     meanWater1: this.meanWater1,
     varianceWater1: this.varianceWater1,
     meanWater2: this.meanWater2,
