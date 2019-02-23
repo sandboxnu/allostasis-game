@@ -157,14 +157,11 @@ class GameController extends Component {
     let hungerSubOptimal = (this.curHunger < this.hungerLowerBound) || (this.curHunger > this.hungerUpperBound);
 
     if (thirstSubOptimal && hungerSubOptimal) {
-       console.log("both subOptimal")
       return 2 * this.loadRate;
     } 
     if (thirstSubOptimal || hungerSubOptimal) {
-      console.log("one subOptimal")
       return this.loadRate;
     }
-    console.log("none subOptimal")
     return 0;
   }
 
