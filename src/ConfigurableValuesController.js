@@ -6,7 +6,6 @@ class ConfigurableValuesController {
   constructor() {
     this.gridRowLength = 10;
     this.initialLoad = 0; 
-    this.loadRate = 2;
     this.meanWater1 = 2;
     this.varianceWater1 = 1;
     this.meanWater2 = 4;
@@ -26,6 +25,7 @@ class ConfigurableValuesController {
     this.hungerLowerBound = 60;
     this.thirstUpperBound = 75;
     this.thirstLowerBound = 55;
+    this.loadRate = 2;
 
     this.setupDefaultImages();
   }
