@@ -36,9 +36,11 @@ class Grid extends Component {
   renderGrid() {
     let gridObjects = [];
     const gridRowLength = ConfigurableValuesController.getGridRowLength();
+    const gridColumnLength = ConfigurableValuesController.getGridColumnLength();
+
     const size = ConfigurableValuesController.getGridSize();
 
-    for (let y = 0; y < gridRowLength; y++) {
+    for (let y = 0; y < gridColumnLength; y++) {
       for(let x = 0; x < gridRowLength; x++) {
         let curEntities = this.getEntitiesAt(x, y, this.props.entities);
         if(curEntities.length !== 0) {
@@ -71,8 +73,11 @@ class Grid extends Component {
   }
 
   render() {
+    let gridWidth = ConfigurableValuesController.getGridSizeWidth()
+    let gridHeight = ConfigurableValuesController.getGridSizeHeight()
+
     return (
-      <div className="gridOutline">
+      <div className="gridOutline" style={{width: gridWidth, height: gridHeight}}>
         {this.renderGrid()}
         {this.renderPlayer()}
       </div>
