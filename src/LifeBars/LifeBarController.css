@@ -1,7 +1,8 @@
 .life-bars {
 	position: relative;
-	padding-top: 50px;
+	padding-top: 100px;
 	padding-left: 0px; 
 	-webkit-transform: rotate(-90deg); 
-	  transform: rotate(-90deg);
+		transform: rotate(-90deg);
+		
 }

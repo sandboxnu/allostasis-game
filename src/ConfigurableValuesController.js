@@ -1,11 +1,13 @@
 import _ from 'lodash';
 
 const gaussian = require('gaussian');
+const GRID_SIZE_CONSTANT = 500
 
 class ConfigurableValuesController {
   constructor() {
-    this.gridRowLength = 10;
-    this.initialLoad = 0; 
+    this.gridColumnLength = 10;
+    this.initialLoad = 0;
+    this.loadRate = 2;
     this.meanWater1 = 2;
     this.varianceWater1 = 1;
     this.meanWater2 = 4;
@@ -25,13 +27,13 @@ class ConfigurableValuesController {
     this.hungerLowerBound = 60;
     this.thirstUpperBound = 75;
     this.thirstLowerBound = 55;
-    this.loadRate = 2;
 
     this.setupDefaultImages();
   }
 
   update(configValues) {
-    this.gridRowLength = _.get(configValues, 'gridRowLength', 10);
+    this.gridRowLength = _.get(configValues, "gridRowLength", 10);
+    this.gridColumnLength = _.get(configValues, "gridColumnLength", 10);
     this.initialLoad = _.get(configValues, "initialLoad", 0);
     this.meanWater1 = _.get(configValues, "meanWater1", 2);
     this.varianceWater1 = _.get(configValues, "varianceWater1", 1);
@@ -130,12 +132,29 @@ class ConfigurableValuesController {
     this.waterTwoImage = 'assets/watertwo.png';
   }
 
+  // Num rows in grid
   getGridRowLength() {
     return this.gridRowLength;
   }
 
+  // Num columns in grid
+  getGridColumnLength() {
+    return this.gridColumnLength;
+  }
+
+  // Overall size of grid -width
+  getGridSizeWidth() {
+    return this.getGridSize() * this.getGridRowLength()
+  }
+
+  // OVerall size of grid -height
+  getGridSizeHeight() {
+    return this.getGridSize() * this.getGridColumnLength()
+  }
+
   getGridSize() {
-    return 500/this.getGridRowLength();
+    var maxRowsColumns = Math.max(this.getGridColumnLength(), this.getGridRowLength())
+    return GRID_SIZE_CONSTANT / maxRowsColumns;
   }
 
   getInitialXPos() {
@@ -143,7 +162,7 @@ class ConfigurableValuesController {
   }
 
   getInitialYPos() {
-    return Math.floor(this.getGridRowLength()/2);
+    return Math.floor(this.getGridColumnLength()/2);
   }
 
   getHungerLowerBound() {

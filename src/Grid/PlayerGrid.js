@@ -17,7 +17,7 @@ class PlayerGrid extends GridComponent {
   }
 
   getYPos() {
-    return (ConfigurableValuesController.getGridRowLength() - this.props.yPos) * this.props.size;
+    return (ConfigurableValuesController.getGridColumnLength() - this.props.yPos) * this.props.size;
   }
 
 
