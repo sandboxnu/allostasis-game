@@ -5,9 +5,9 @@ const GRID_SIZE_CONSTANT = 500
 
 class ConfigurableValuesController {
   constructor() {
-    this.gridRowLength = 10;
     this.gridColumnLength = 10;
     this.initialLoad = 0;
+    this.loadRate = 2;
     this.meanWater1 = 2;
     this.varianceWater1 = 1;
     this.meanWater2 = 4;
@@ -54,6 +54,7 @@ class ConfigurableValuesController {
     this.hungerLowerBound = _.get(configValues, "hungerLowerBound", 60);
     this.thirstUpperBound = _.get(configValues, "thirstUpperBound", 75);
     this.thirstLowerBound = _.get(configValues, "thirstLowerBound", 55);
+    this.loadRate = _.get(configValues, "loadRate", 2)
 
     if (this.foodOneImage == null || this.foodTwoImage == null || this.waterOneImage == null || this.waterTwoImage == null) {
       this.setupDefaultImages();
@@ -192,6 +193,10 @@ class ConfigurableValuesController {
     return this.initialLoad;
   }
 
+  getLoadRate() {
+    return this.loadRate;
+  }
+
   shouldShowImages() {
     return this.shouldShowImages;
   }
@@ -216,6 +221,7 @@ class ConfigurableValuesController {
     return  ({
     rowLength: this.gridRowLength,
     initialLoad: this.initialLoad,
+    loadRate: this.loadRate,
     meanWater1: this.meanWater1,
     varianceWater1: this.varianceWater1,
     meanWater2: this.meanWater2,

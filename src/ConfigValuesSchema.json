@@ -14,6 +14,10 @@
             "type": "number",
             "description": "Starting value for player's load (out of 100)"
         },
+        "loadRate": {
+            "type": "number",
+            "description": "Load increase when one or more of the bars are in suboptimal range"
+        },
         "meanWater1": {
             "type": "number",
             "description": "Mean reward from water 1"
@@ -75,6 +79,7 @@
         "gridRowLength",
         "gridColumnLength",
         "initialLoad",
+        "loadRate",
         "meanWater1",
         "varianceWater1",
         "meanWater2",
