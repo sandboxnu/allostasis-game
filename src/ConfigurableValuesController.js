@@ -54,7 +54,8 @@ class ConfigurableValuesController {
     this.hungerLowerBound = _.get(configValues, "hungerLowerBound", 60);
     this.thirstUpperBound = _.get(configValues, "thirstUpperBound", 75);
     this.thirstLowerBound = _.get(configValues, "thirstLowerBound", 55);
-    this.loadRate = _.get(configValues, "loadRate", 2)
+    this.loadRate = _.get(configValues, "loadRate", 2);
+    this.shouldRelocateEntity = _.get(configValues, "shouldRelocateEntity", false);
 
     if (this.foodOneImage == null || this.foodTwoImage == null || this.waterOneImage == null || this.waterTwoImage == null) {
       this.setupDefaultImages();
@@ -217,9 +218,14 @@ class ConfigurableValuesController {
     return this.foodTwoImage;
   }
 
+  getShouldRelocateEntities() {
+    return this.shouldRelocateEntity;
+  }
+
   getConfigurableValues() {
     return  ({
     rowLength: this.gridRowLength,
+    columnLength: this.gridColumnLength,
     initialLoad: this.initialLoad,
     loadRate: this.loadRate,
     meanWater1: this.meanWater1,
@@ -235,7 +241,8 @@ class ConfigurableValuesController {
     hungerUpperBound: this.hungerUpperBound,
     hungerLowerBound: this.hungerLowerBound,
     thirstUpperBound: this.thirstUpperBound,
-    thirstLowerBound: this.thirstLowerBound
+    thirstLowerBound: this.thirstLowerBound,
+    shouldRelocateEntity: this.shouldRelocateEntity,
     });
   }
 }

@@ -73,6 +73,10 @@
         "thirstLowerBound": {
             "type": "number",
             "description": "The lower bound of the ideal range for thirst (out of 100)"
+        },
+        "shouldRelocateEntity": {
+            "type": "boolean",
+            "description": "Should the entity be relocated after interacting with it"
         }
     },
     "required": [
@@ -93,6 +97,7 @@
         "hungerUpperBound",
         "hungerLowerBound",
         "thirstUpperBound",
-        "thirstLowerBound"
+        "thirstLowerBound",
+        "shouldRelocateEntity"
     ]
 }
