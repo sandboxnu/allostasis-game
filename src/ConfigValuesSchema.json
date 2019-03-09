@@ -76,7 +76,43 @@
         },
         "shouldRelocateEntity": {
             "type": "boolean",
-            "description": "Should the entity be relocated after interacting with it"
+            "description": "Should the entity be relocated after interacting with it?"
+        },
+        "chooseStartingPositionOfEntities": {
+            "type": "boolean",
+            "description": "Do you want to specify the starting position for the entities?"
+        },
+        "foodOneXPosition": {
+            "type": "number",
+            "description": "Food #1 X Position"
+        },
+        "foodOneYPosition": {
+            "type": "number",
+            "description": "Food #1 Y Position"
+        },
+        "foodTwoXPosition": {
+            "type": "number",
+            "description": "Food #2 X Position"
+        },
+        "foodTwoYPosition": {
+            "type": "number",
+            "description": "Food #2 Y Position"
+        },
+        "waterOneXPosition": {
+            "type": "number",
+            "description": "Water #1 X Position"
+        },
+        "waterOneYPosition": {
+            "type": "number",
+            "description": "Water #1 Y Position"
+        },
+        "waterTwoXPosition": {
+            "type": "number",
+            "description": "Water #2 X Position"
+        },
+        "waterTwoYPosition": {
+            "type": "number",
+            "description": "Water #2 Y Position"
         }
     },
     "required": [
@@ -97,7 +133,6 @@
         "hungerUpperBound",
         "hungerLowerBound",
         "thirstUpperBound",
-        "thirstLowerBound",
-        "shouldRelocateEntity"
+        "thirstLowerBound"
     ]
 }

@@ -45,6 +45,10 @@ class GameController extends Component {
   }
 
   _generateEntities() {
+    if (ConfigurableValuesController.isChoosingStartingPosition()) {
+      return ConfigurableValuesController.getStartingEntities();
+    }
+
     let entities = [];
     this._placeEntity(entities, ConfigurableValuesController.getEntityDataWater1());
     this._placeEntity(entities, ConfigurableValuesController.getEntityDataWater2());
