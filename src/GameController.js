@@ -45,6 +45,10 @@ class GameController extends Component {
   }
 
   _generateEntities() {
+    if (ConfigurableValuesController.isChoosingStartingPosition()) {
+      return ConfigurableValuesController.getStartingEntities();
+    }
+
     let entities = [];
     this._placeEntity(entities, ConfigurableValuesController.getEntityDataWater1());
     this._placeEntity(entities, ConfigurableValuesController.getEntityDataWater2());
@@ -185,6 +189,11 @@ class GameController extends Component {
         food: ConfigurableValuesController.getMovementHungerDecay(),
         water: ConfigurableValuesController.getMovementThirstDecay(),
       });
+
+      if (ConfigurableValuesController.getShouldRelocateEntities()) {
+        this.relocateEntities(entitiesHere);
+      }
+
       let loadDelta = this._loadIncrease();
       this._adjustThirst(entityRewards.water);
       this._adjustHunger(entityRewards.food);
@@ -198,7 +207,31 @@ class GameController extends Component {
         lastAction: move
       });
     }
-    
+  }
+
+  relocateEntities(entitiesToRelocate) {
+    if (entitiesToRelocate == null || entitiesToRelocate.size === 0) {
+      return;
+    } 
+
+    let newEntities = this.state.entities.filter(e => !entitiesToRelocate.includes(e));
+    let self = this;
+
+    entitiesToRelocate.forEach(function(e) {
+      if (e.data.name === 'F1') {
+        self._placeEntity(newEntities, ConfigurableValuesController.getEntityDataFood1());
+      } else if (e.data.name === 'F2') {
+        self._placeEntity(newEntities, ConfigurableValuesController.getEntityDataFood2());
+      } else if (e.data.name=== 'W1') {
+        self._placeEntity(newEntities, ConfigurableValuesController.getEntityDataWater1());
+      } else if (e.data.name === 'W2') {
+        self._placeEntity(newEntities, ConfigurableValuesController.getEntityDataWater2());
+      }
+    });
+
+    this.setState({
+      entities: newEntities
+    })
   }
 
   generateStateInfo() {

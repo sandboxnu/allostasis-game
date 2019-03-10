@@ -54,11 +54,49 @@ class ConfigurableValuesController {
     this.hungerLowerBound = _.get(configValues, "hungerLowerBound", 60);
     this.thirstUpperBound = _.get(configValues, "thirstUpperBound", 75);
     this.thirstLowerBound = _.get(configValues, "thirstLowerBound", 55);
-    this.loadRate = _.get(configValues, "loadRate", 2)
+    this.loadRate = _.get(configValues, "loadRate", 2);
+    this.shouldRelocateEntity = _.get(configValues, "shouldRelocateEntity", false);
+    this.chooseStartingPositionOfEntities = _.get(configValues, "chooseStartingPositionOfEntities", false);
+
+    if(this.chooseStartingPositionOfEntities) {
+      this.waterOne = [_.get(configValues, "waterOneXPosition", 0), _.get(configValues, "waterOneYPosition", 0)];
+      this.waterTwo = [_.get(configValues, "waterTwoXPosition", 0), _.get(configValues, "waterTwoYPosition", 0)];
+      this.foodOne = [_.get(configValues, "foodOneXPosition", 0), _.get(configValues, "foodOneYPosition", 0)];
+      this.foodTwo = [_.get(configValues, "foodTwoXPosition", 0), _.get(configValues, "foodTwoYPosition", 0)];
+    }
 
     if (this.foodOneImage == null || this.foodTwoImage == null || this.waterOneImage == null || this.waterTwoImage == null) {
       this.setupDefaultImages();
     }
+  }
+
+  isChoosingStartingPosition() {
+    return this.chooseStartingPositionOfEntities;
+  }
+
+  getStartingEntities() {
+    let waterOneData = this.getEntityDataWater1();
+    let waterTwoData = this.getEntityDataWater2();
+    let foodOneData = this.getEntityDataFood1();
+    let foodTwoData = this.getEntityDataFood2();
+
+    let entities = [];
+
+    entities.push(
+      {x: this.waterOne[0] , y: this.waterOne[1], data: waterOneData}
+    );
+    entities.push(
+      {x: this.waterTwo[0] , y: this.waterTwo[1], data: waterTwoData}
+    );
+    entities.push(
+      {x: this.foodOne[0] , y: this.foodOne[1], data: foodOneData}
+    );
+    entities.push(
+      {x: this.foodTwo[0] , y: this.foodTwo[1], data: foodTwoData}
+    );
+
+    return entities;
+
   }
 
   getEntityDataWater1() {
@@ -217,9 +255,14 @@ class ConfigurableValuesController {
     return this.foodTwoImage;
   }
 
+  getShouldRelocateEntities() {
+    return this.shouldRelocateEntity;
+  }
+
   getConfigurableValues() {
     return  ({
     rowLength: this.gridRowLength,
+    columnLength: this.gridColumnLength,
     initialLoad: this.initialLoad,
     loadRate: this.loadRate,
     meanWater1: this.meanWater1,
@@ -235,7 +278,9 @@ class ConfigurableValuesController {
     hungerUpperBound: this.hungerUpperBound,
     hungerLowerBound: this.hungerLowerBound,
     thirstUpperBound: this.thirstUpperBound,
-    thirstLowerBound: this.thirstLowerBound
+    thirstLowerBound: this.thirstLowerBound,
+    shouldRelocateEntity: this.shouldRelocateEntity,
+    chooseStartingPositionOfEntities: this.chooseStartingPositionOfEntities
     });
   }
 }
