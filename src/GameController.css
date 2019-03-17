@@ -3,3 +3,11 @@
 	display: flex;
 	flex-direction: row;
 }
+.scoreIndicator {
+	position: absolute;
+	left: 50%;
+	top: 30px;
+	font-size: 2.5em;
+	font-weight: bold; 
+	text-align: center;
+}
