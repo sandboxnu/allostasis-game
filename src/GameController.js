@@ -32,23 +32,27 @@ class GameController extends Component {
     this.data = []
     this.loadRate = ConfigurableValuesController.getLoadRate();
 
+    this.hasGameEnded = false;
+    let startingEntities = ConfigurableValuesController.isChoosingStartingPosition() ? ConfigurableValuesController.getStartingEntities() : this._generateEntities();
+    this.prevEntities = []
+
+    this.rewardNumberColor = "#383d44";
+
     this.state = {
-      entities: this._generateEntities(),
+      entities: startingEntities,
       playerXPos: ConfigurableValuesController.getInitialXPos(),
       playerYPos: ConfigurableValuesController.getInitialYPos(),
       hunger: this.curHunger,
       thirst: this.curThirst,
       load: this.curLoad,
       curTick: 0,
-      lastAction: GlobalConstants.actionEnum.Start
+      lastAction: GlobalConstants.actionEnum.Start,
+      rewardNumber: 0,
     }
+
   }
 
   _generateEntities() {
-    if (ConfigurableValuesController.isChoosingStartingPosition()) {
-      return ConfigurableValuesController.getStartingEntities();
-    }
-
     let entities = [];
     this._placeEntity(entities, ConfigurableValuesController.getEntityDataWater1());
     this._placeEntity(entities, ConfigurableValuesController.getEntityDataWater2());
@@ -63,15 +67,36 @@ class GameController extends Component {
     let random_coord = (upperLimit) => {
       return Math.max(Math.min(Math.round(Math.random() * upperLimit), upperLimit - 1), 0);
     };
-    let no_placement_conflict = entity => {
-      return x !== entity.x && y !== entity.y;
+
+    var x = random_coord(this.rowLength);
+    var y = random_coord(this.columnLength);
+
+    while(this._checkForCollision(x, y, entities)) {
+      x = random_coord(this.rowLength);
+      y = random_coord(this.columnLength);
+    }
+    entities.push({x, y, data: new_entity_data});
+  }
+
+  _checkForCollision(x, y, entities) {
+    var collision = false;
+    for (var i = 0; i < entities.length; i ++) {
+      let entity = entities[i]      
+      if (entity.x == x && entity.y == y) {
+        return true;
+      }
     }
 
-    do {
-      var x = random_coord(this.rowLength);
-      var y = random_coord(this.columnLength);
-      entities.push({x, y, data: new_entity_data});
-    } while(entities.every(no_placement_conflict));
+    if (this.prevEntities) {
+      for (var i = 0; i < this.prevEntities.length; i ++) {
+        let entity = this.prevEntities[i]      
+        if (entity.x == x && entity.y == y) {
+          return true;
+        }
+      }
+    }
+
+    return collision;
   }
   
   componentWillMount(){
@@ -190,11 +215,29 @@ class GameController extends Component {
         water: ConfigurableValuesController.getMovementThirstDecay(),
       });
 
-      if (ConfigurableValuesController.getShouldRelocateEntities()) {
-        this.relocateEntities(entitiesHere);
+      if (ConfigurableValuesController.getShouldRelocateEntities() && entitiesHere.length > 0) {
+        this.relocateEntities();
       }
 
       let loadDelta = this._loadIncrease();
+
+      if (entityRewards.water > 0) {
+        this.rewardNumberColor = "#0954bc";
+        this.setState({
+          rewardNumber: entityRewards.water.toFixed(2)
+        });
+      } else if (entityRewards.food > 0) {
+        this.rewardNumberColor = "#19a80a";
+        this.setState({
+          rewardNumber: entityRewards.food.toFixed(2)
+        });
+      } else {
+        this.rewardNumberColor = "#383d44";
+        this.setState({
+          rewardNumber: 0
+        });
+      }
+
       this._adjustThirst(entityRewards.water);
       this._adjustHunger(entityRewards.food);
       this._adjustLoad(loadDelta);
@@ -209,29 +252,14 @@ class GameController extends Component {
     }
   }
 
-  relocateEntities(entitiesToRelocate) {
-    if (entitiesToRelocate == null || entitiesToRelocate.size === 0) {
-      return;
-    } 
-
-    let newEntities = this.state.entities.filter(e => !entitiesToRelocate.includes(e));
-    let self = this;
-
-    entitiesToRelocate.forEach(function(e) {
-      if (e.data.name === 'F1') {
-        self._placeEntity(newEntities, ConfigurableValuesController.getEntityDataFood1());
-      } else if (e.data.name === 'F2') {
-        self._placeEntity(newEntities, ConfigurableValuesController.getEntityDataFood2());
-      } else if (e.data.name=== 'W1') {
-        self._placeEntity(newEntities, ConfigurableValuesController.getEntityDataWater1());
-      } else if (e.data.name === 'W2') {
-        self._placeEntity(newEntities, ConfigurableValuesController.getEntityDataWater2());
-      }
-    });
-
+  relocateEntities() {
+    this.prevEntities = this.state.entities;
     this.setState({
-      entities: newEntities
-    })
+      entities: []
+    });
+    this.setState({
+      entities: this._generateEntities()
+    });
   }
 
   generateStateInfo() {
@@ -267,25 +295,32 @@ class GameController extends Component {
   }
 
   render() {
-    if (this.checkForEndGame()) {
+    if (this.checkForEndGame() || this.hasGameEnded) {
+      this.hasGameEnded = true;
       return this.renderEndGame();
     }
     return (
-      <div className="gameController">
-        <Grid
-          gameGrid = {this.state.currentGrid}
-          entities = {this.state.entities}
-          playerX = {this.state.playerXPos}
-          playerY = {this.state.playerYPos}/>
-        <LifeBarController
-          hunger={this.state.hunger}
-          thirst={this.state.thirst}
-          load={this.state.load}
-          hungerRangeBottom={this.hungerLowerBound}
-          hungerRangeTop={this.hungerUpperBound}
-          thirstRangeBottom={this.thirstLowerBound}
-          thirstRangeTop={this.thirstUpperBound}/>
+      <div>
+        <div className="scoreIndicator">
+          <p style={{color:this.rewardNumberColor}}>{this.state.rewardNumber}</p>
+        </div>
+        <div className="gameController">
+          <Grid
+            gameGrid = {this.state.currentGrid}
+            entities = {this.state.entities}
+            playerX = {this.state.playerXPos}
+            playerY = {this.state.playerYPos}/>
+          <LifeBarController
+            hunger={this.state.hunger}
+            thirst={this.state.thirst}
+            load={this.state.load}
+            hungerRangeBottom={this.hungerLowerBound}
+            hungerRangeTop={this.hungerUpperBound}
+            thirstRangeBottom={this.thirstLowerBound}
+            thirstRangeTop={this.thirstUpperBound}/>
+        </div>
       </div>
+      
     );
   }
 }
