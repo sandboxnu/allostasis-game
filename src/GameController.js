@@ -224,12 +224,12 @@ class GameController extends Component {
       if (entityRewards.water > 0) {
         this.rewardNumberColor = "#0954bc";
         this.setState({
-          rewardNumber: entityRewards.water.toFixed(2)
+          rewardNumber: entityRewards.water.toFixed(1)
         });
       } else if (entityRewards.food > 0) {
         this.rewardNumberColor = "#19a80a";
         this.setState({
-          rewardNumber: entityRewards.food.toFixed(2)
+          rewardNumber: entityRewards.food.toFixed(1)
         });
       } else {
         this.rewardNumberColor = "#383d44";
