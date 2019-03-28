@@ -36,7 +36,7 @@ class LaunchScreen extends Component {
 	}
 
 	renderStartButton() {
-		let buttonBg = this.state.hasConfigLoaded ? {background: '#f7b733'} : {background: '#fbdb99'};
+		let buttonBg = this.state.hasConfigLoaded ? {background: '#f7b733', color: 'white'} : {background: '#fbdb99', color:'white'};
 		let buttonTxt = this.state.hasConfigLoaded ? "Click on the button above to start!" : "Please wait while the game loads!"
 		return(
 			<div>
