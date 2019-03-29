@@ -44,7 +44,7 @@ class Login extends Component {
             <label htmlFor="inputPassword">Please Enter the Password:</label>
             <Text field="inputPassword" type="password" className="form-control" id="inputPassword" placeholder="Password" />
           </div>
-          {badPassword ? <div>Incorrect Password!</div> : null}
+          {badPassword ? <div style={{color: "red", paddingBottom: 10, marginTop: -5}}>Incorrect Password!</div> : null}
           <button type="submit" className="btn btn-primary">Submit</button>
         </Form>
       </div>

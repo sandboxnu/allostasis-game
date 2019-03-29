@@ -2,7 +2,7 @@ import Axios from 'axios';
 import React from 'react';
 
 
-const SERVER_URL = 'https://api.sandboxneu.com/test';
+const SERVER_URL = 'https://api.sandboxneu.com/authtest/';
 
 class ServerUtils {
   sendData(collected) {
