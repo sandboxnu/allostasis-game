@@ -8,6 +8,7 @@ import schema from './ConfigValuesSchema';
 import Login from './Login';
 import ServerUtils from './ServerUtils';
 
+
 const SERVER_URL = ServerUtils.getServerUrl();
 
 class AdminPanel extends Component {
@@ -101,14 +102,22 @@ class AdminPanel extends Component {
   render() {
     const { authenticated } = this.state;
     if (!authenticated) {
-      return <Login onPassword={p => this.onPassword(p)} />;
+      return (
+        <div>
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+          <Login onPassword={p => this.onPassword(p)} />
+        </div>
+      );
     }
     return (
-      <Beforeunload onBeforeunload={e => this.onClose(e)}>
-        <Fetch url={`${SERVER_URL}/experiment`} as="json" onDataChange={d => this.onServerData(d)}>
-          {() => this.renderPanel()}
-        </Fetch>
-      </Beforeunload>
+      <div>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+        <Beforeunload onBeforeunload={e => this.onClose(e)}>
+          <Fetch url={`${SERVER_URL}/experiment`} as="json" onDataChange={d => this.onServerData(d)}>
+            {() => this.renderPanel()}
+          </Fetch>
+        </Beforeunload>
+      </div>
     );
   }
 }
