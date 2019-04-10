@@ -57,7 +57,6 @@ class Login extends Component {
           {badPassword ? <div style={{color: "red", paddingBottom: 10, marginTop: -5}}>Incorrect Password!</div> : null}
           <button type="submit" className="btn btn-primary">Submit</button>
         </Form>
-				<a class="changePasswordToggleButton" onClick={this.toggleLogin}> {changePasswordToggleText}</a>
       </div>
     );
   }
