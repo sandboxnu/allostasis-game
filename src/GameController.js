@@ -47,7 +47,8 @@ class GameController extends Component {
       load: this.curLoad,
       curTick: 0,
       lastAction: GlobalConstants.actionEnum.Start,
-      rewardNumber: 0,
+      rewardNumberWater: 0,
+      rewardNumberFood: 0,
     }
 
   }
@@ -224,12 +225,14 @@ class GameController extends Component {
       if (entityRewards.water > 0) {
         this.rewardNumberColor = "#0954bc";
         this.setState({
-          rewardNumber: entityRewards.water.toFixed(1)
+          rewardNumberFood: 0,
+          rewardNumberWater: entityRewards.water.toFixed(1)
         });
       } else if (entityRewards.food > 0) {
         this.rewardNumberColor = "#19a80a";
         this.setState({
-          rewardNumber: entityRewards.food.toFixed(1)
+          rewardNumberFood: entityRewards.food.toFixed(1),
+          rewardNumberWater: 0
         });
       } else {
         this.rewardNumberColor = "#383d44";
@@ -301,9 +304,6 @@ class GameController extends Component {
     }
     return (
       <div>
-        <div className="scoreIndicator">
-          <p style={{color:this.rewardNumberColor}}>{this.state.rewardNumber}</p>
-        </div>
         <div className="gameController">
           <Grid
             gameGrid = {this.state.currentGrid}
@@ -311,6 +311,8 @@ class GameController extends Component {
             playerX = {this.state.playerXPos}
             playerY = {this.state.playerYPos}/>
           <LifeBarController
+            rewardNumberFood={this.state.rewardNumberFood}
+            rewardNumberWater={this.state.rewardNumberWater}
             hunger={this.state.hunger}
             thirst={this.state.thirst}
             load={this.state.load}
