@@ -12,6 +12,7 @@ class Login extends Component {
     this.state = {
       badPassword: false,
       password: null,
+      shouldShowChangePassword: false,
     };
   }
 
@@ -33,15 +34,24 @@ class Login extends Component {
     
   }
 
+  toggleLogin = () => {
+    this.setState({
+      shouldShowChangePassword: !this.state.shouldShowChangePassword
+    })
+  }
+
   render() {
     const { badPassword } = this.state;
+    const changePasswordToggleText = this.state.shouldShowChangePassword ? "Login" : "Change Password";
+    const passwordText = this.state.shouldShowChangePassword ? "Please Enter the Old Password:" : "Please Enter the Old Password:";
+
     return (
       <div className="container" style={{marginTop: '35vh'}}>
         <Form
           onChange={(s) => { this.setState({ password: s.values.inputPassword }); }}
           onSubmit={() => { this.onPassword(); }}>
           <div className="form-group">
-            <label htmlFor="inputPassword">Please Enter the Password:</label>
+            <label htmlFor="inputPassword">{passwordText}</label>
             <Text field="inputPassword" type="password" className="form-control" id="inputPassword" placeholder="Password" />
           </div>
           {badPassword ? <div style={{color: "red", paddingBottom: 10, marginTop: -5}}>Incorrect Password!</div> : null}

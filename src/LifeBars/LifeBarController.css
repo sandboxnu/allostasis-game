@@ -1,8 +1,33 @@
-.life-bars {
+.life-bars-container{
 	position: relative;
-	padding-top: 100px;
-	padding-left: 0px; 
+	padding-top: 60px;
+	padding-left: 0px;		
+	display: flex;
+	flex-direction: column;
+}
+
+.life-bars-rewards {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+}
+
+.reward {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.reward-left {
+	font-size: 1.5em;
+	padding-left: 72px;
+	padding-right: 93px;
+	margin-bottom: 8px;
+	font-weight: bold;
+}
+
+.life-bars{
+	padding-top: 210px;
+	margin-left: -150px;		
 	-webkit-transform: rotate(-90deg); 
-		transform: rotate(-90deg);
-		
+	transform: rotate(-90deg);
 }

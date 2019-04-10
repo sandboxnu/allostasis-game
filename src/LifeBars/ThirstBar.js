@@ -9,7 +9,8 @@ class ThirstBar extends Component {
 									name={"Thirst"}
 									paddingTop={5}
 									rangeBottom={this.props.rangeBottom}
-									rangeTop={this.props.rangeTop}/>
+									rangeTop={this.props.rangeTop}
+									rewardNumber={this.props.rewardNumberFood}/>
 			</div>)
 	}
 }

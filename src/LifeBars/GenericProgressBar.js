@@ -17,13 +17,21 @@ const renderRanges = (bar, bottom, top) => {
 }
 
 const GenericProgressBar = (props) => {
+	let fillerColor = '#f7b733';
+
+	if(props.name === 'Thirst') {
+		fillerColor = '#6FB9F3'
+	} else if(props.name === 'Hunger') {
+		fillerColor = '#49AD1B'
+	}
+
 	return(
 		<div className="genericContainer">
 			<div className="textBox" style={{paddingTop: props.paddingTop}}>
 				{props.name}
 			</div> 
 			<div className="generic-progress">
-				<Filler percentage={props.percentage}/>
+				<Filler percentage={props.percentage} color={fillerColor}/>
 				{renderRanges(props.name, props.rangeBottom, props.rangeTop, 80)}
 			</div>
 		</div>
