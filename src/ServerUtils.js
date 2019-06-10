@@ -1,8 +1,6 @@
 import Axios from 'axios';
-import React from 'react';
 
-
-const SERVER_URL = 'https://api.sandboxneu.com/allostasis-game';
+const SERVER_URL = 'https://api.sandboxneu.com/production-allostasis/';
 
 class ServerUtils {
   sendData(collected) {
