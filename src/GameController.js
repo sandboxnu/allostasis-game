@@ -338,9 +338,7 @@ class GameController extends Component {
     if (this.props.isTutorial && this.numMoves > 50) {
       this.reset();
       this.endTutorial();
-    }
-
-    if (this.checkForEndGame() || this.hasGameEnded || this.numMoves > ConfigurableValuesController.getMaxMoves()) {
+    } else if (!this.props.isTutorial && (this.checkForEndGame() || this.hasGameEnded || this.numMoves > ConfigurableValuesController.getMaxMoves())) {
       this.hasGameEnded = true;
       return this.renderEndGame();
     }
