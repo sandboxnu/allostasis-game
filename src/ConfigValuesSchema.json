@@ -113,7 +113,25 @@
         "waterTwoYPosition": {
             "type": "number",
             "description": "Water #2 Y Position"
+        },
+        "maxMoves": {
+            "type": "number",
+            "description": "Max number of moves for the game"
+        },
+        "introDescription": {
+            "type": "string",
+            "description": "The description at the launch screen"
+        },
+        "beginningTutorialDescription": {
+            "type": "string",
+            "description": "The description at the beginning of the tutorial"
+        },
+        "endTutorialDescription": {
+            "type": "string",
+            "description": "The description at the end of the tutorial"
         }
+
+        
     },
     "required": [
         "gridRowLength",
@@ -133,6 +151,10 @@
         "hungerUpperBound",
         "hungerLowerBound",
         "thirstUpperBound",
-        "thirstLowerBound"
+        "thirstLowerBound",
+        "maxMoves",
+        "introDescription",
+        "beginningTutorialDescription",
+        "endTutorialDescription"
     ]
 }

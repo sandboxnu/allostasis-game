@@ -27,6 +27,10 @@ class ConfigurableValuesController {
     this.hungerLowerBound = 60;
     this.thirstUpperBound = 75;
     this.thirstLowerBound = 55;
+    this.maxMoves = 200;
+    this.introDescription = "In this study, you will play a simple game where you will collect food and water.";
+    this.beginningTutorialDescription = "You will have 50 moves to practice the game. After you are done, you will begin the game!";
+    this.endTutorialDescription = "You have finished the practice round! Click below to start the game!";
 
     this.setupDefaultImages();
   }
@@ -57,6 +61,11 @@ class ConfigurableValuesController {
     this.loadRate = _.get(configValues, "loadRate", 2);
     this.shouldRelocateEntity = _.get(configValues, "shouldRelocateEntity", false);
     this.chooseStartingPositionOfEntities = _.get(configValues, "chooseStartingPositionOfEntities", false);
+    this.maxMoves = _.get(configValues, "maxMoves", 200);
+    this.introDescription = _.get(configValues, "introDescription", "In this study, you will play a simple game where you will collect food and water.");
+    this.beginningTutorialDescription = _.get(configValues, "beginningTutorialDescription", "You will have 50 moves to practice the game. After you are done, you will begin the game!");
+    this.endTutorialDescription = _.get(configValues, "endTutorialDescription", "You have finished the practice round! Click below to start the game!");
+
 
     if(this.chooseStartingPositionOfEntities) {
       this.waterOne = [_.get(configValues, "waterOneXPosition", 0), _.get(configValues, "waterOneYPosition", 0)];
@@ -164,10 +173,10 @@ class ConfigurableValuesController {
   }
 
   setupDefaultImages() {
-    this.foodOneImage = 'assets/treeone.png';
-    this.foodTwoImage = 'assets/treetwo.png';
-    this.waterOneImage = 'assets/waterone.png';
-    this.waterTwoImage = 'assets/watertwo.png';
+    this.foodOneImage = 'assets/Food1.png';
+    this.foodTwoImage = 'assets/Food2.png';
+    this.waterOneImage = 'assets/Water1.png';
+    this.waterTwoImage = 'assets/Water2.png';
   }
 
   // Num rows in grid
@@ -259,6 +268,22 @@ class ConfigurableValuesController {
     return this.shouldRelocateEntity;
   }
 
+  getMaxMoves() {
+    return this.maxMoves;
+  }
+
+  getIntroDescription() {
+    return this.introDescription;
+  }
+
+  getBeginningTutorialDescription() {
+    return this.beginningTutorialDescription;
+  }
+
+  getEndTutorialDescription() {
+    return this.endTutorialDescription;
+  }
+
   getConfigurableValues() {
     return  ({
     rowLength: this.gridRowLength,
@@ -280,7 +305,8 @@ class ConfigurableValuesController {
     thirstUpperBound: this.thirstUpperBound,
     thirstLowerBound: this.thirstLowerBound,
     shouldRelocateEntity: this.shouldRelocateEntity,
-    chooseStartingPositionOfEntities: this.chooseStartingPositionOfEntities
+    chooseStartingPositionOfEntities: this.chooseStartingPositionOfEntities,
+    maxMoves: this.maxMoves,
     });
   }
 }

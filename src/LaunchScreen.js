@@ -4,6 +4,7 @@ import GameController from './GameController';
 import Axios from 'axios';
 import ServerUtils from './ServerUtils';
 import ConfigurableValuesController from './ConfigurableValuesController';
+import TutorialInfo from './TutorialInfo';
 
 
 class LaunchScreen extends Component {
@@ -28,7 +29,7 @@ class LaunchScreen extends Component {
 		return (
 			<div class = "launchContainer">
 				<div class = "launchTitle"> Allostasis Behaviour Study</div>
-				<div class = "launchSubtitle"> This is a placeholder for the subtitle. A simple description of the study can be placed here.</div>
+				<div class = "launchSubtitle"> {ConfigurableValuesController.getIntroDescription()}</div>
 				{this.renderStartButton()}
 				<div class = "launchFooter"> Developed by <a class = "sandboxLink" href="https://sandboxneu.com/"> Sandbox Research Group </a> for David Melnikoff.</div>
 			</div>	
@@ -56,7 +57,7 @@ class LaunchScreen extends Component {
 		let screen;
 
 		if (startClicked) {
-			screen = <GameController/>
+			screen = <TutorialInfo/>
 		} else {
 			screen = this.renderLaunchScreen();
 		}

@@ -24,7 +24,7 @@ class PlayerGrid extends GridComponent {
   render() {
     return (
       <div className="playerGridOutline" style={{width: this.props.size, height: this.props.size, bottom: this.getYPos(), left: this.getXPos()}}>
-        <img src={require("../assets/avatar.png")} alt="" className="profileImg" />
+        <img src={require("../assets/Person.png")} alt="" className="profileImg" />
       </div>
     );
   }
