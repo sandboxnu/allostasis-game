@@ -8,5 +8,5 @@
       {"src": "^/static/(.*)", "dest": "/static/$1"},
       {"src": "/.*", "dest": "/index.html"}
     ],
-    "alias": "alloiwnvcyu.sandboxneu.com"
+    "alias": "allostasis.sandboxneu.com"
 }
