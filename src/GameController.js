@@ -5,6 +5,7 @@ import GlobalConstants from './GlobalConstants.js';
 import LifeBarController from './LifeBars/LifeBarController.js';
 import ServerUtils from './ServerUtils';
 import "./GameController.css";
+import crc32 from 'js-crc';
 
 const ENTER_KEY = 13;
 const LEFT_KEY = 37;
@@ -17,6 +18,14 @@ class GameController extends Component {
 
   constructor() {
     super();
+    this.reset();   
+  }
+
+  componentWillMount() {
+		this.reset();
+	}
+
+  reset() {
     this.hasSentData = false;
     this.rowLength = ConfigurableValuesController.getGridRowLength();
     this.columnLength = ConfigurableValuesController.getGridColumnLength();
@@ -31,10 +40,11 @@ class GameController extends Component {
     this.generateStateInfo = this.generateStateInfo.bind(this);
     this.data = []
     this.loadRate = ConfigurableValuesController.getLoadRate();
-
+    this.numMoves = 0;
     this.hasGameEnded = false;
     let startingEntities = ConfigurableValuesController.isChoosingStartingPosition() ? ConfigurableValuesController.getStartingEntities() : this._generateEntities();
     this.prevEntities = []
+    this.finalCode = 0;
 
     this.rewardNumberColor = "#383d44";
 
@@ -50,7 +60,6 @@ class GameController extends Component {
       rewardNumberWater: 0,
       rewardNumberFood: 0,
     }
-
   }
 
   _generateEntities() {
@@ -197,6 +206,7 @@ class GameController extends Component {
   }
 
   _handlePlayerMovement(xMov, yMov, move) {
+    this.numMoves++;
     let curX = this.state.playerXPos;
     let curY = this.state.playerYPos;
     curX += xMov;
@@ -280,25 +290,55 @@ class GameController extends Component {
     return this.state.hunger >= 100 || this.state.hunger <= 0 || this.state.thirst >= 100 || this.state.thirst <=0 || this.state.load >= 100;
   }
 
+  generateCode() {
+    var firstPart = (Math.random() * 46656) | 0;
+    var secondPart = (Math.random() * 46656) | 0;
+    firstPart = ("000" + firstPart.toString(36)).slice(-3);
+    secondPart = ("000" + secondPart.toString(36)).slice(-3);
+    var date = new Date();
+    var code = firstPart + secondPart + date.getHours() + date.getMilliseconds() + date.getDay();
+    return code.replace(/\D/g,'');
+
+}
+
   renderEndGame() {
+    if (this.isTutorial) {
+      return;
+    }
+
     if (!this.hasSentData) {
+      this.finalCode = this.generateCode();
+      var dt = new Date();
+      var utcDate = dt.toUTCString();
       let finalData ={
         configValues: ConfigurableValuesController.getConfigurableValues(),
-        data: this.data
+        data: this.data,
+        timeStamp: utcDate,
+        code: this.finalCode
       };
+      console.log(finalData);
       ServerUtils.sendData(finalData)
       this.hasSentData = true;
     }
+
     return (
         <div>
-          GAME OVER
+          <p> <center>GAME OVER </center></p>
+          <p> <center>Please return to the survey and enter <strong> {this.finalCode} </strong> as your code.</center></p>
         </div>
 
       );
   }
 
+  endTutorial() {
+    this.props.endTutorial();
+  }
+
   render() {
-    if (this.checkForEndGame() || this.hasGameEnded) {
+    if (this.props.isTutorial && this.numMoves > 50) {
+      this.reset();
+      this.endTutorial();
+    } else if (!this.props.isTutorial && (this.checkForEndGame() || this.hasGameEnded || this.numMoves > ConfigurableValuesController.getMaxMoves())) {
       this.hasGameEnded = true;
       return this.renderEndGame();
     }
