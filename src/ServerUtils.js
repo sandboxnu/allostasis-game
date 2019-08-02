@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-const SERVER_URL = 'https://api.sandboxneu.com/production-allostasis/';
+const SERVER_URL = 'https://api.sandboxneu.com/test/';
 
 class ServerUtils {
   sendData(collected) {
