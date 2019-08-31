@@ -20,35 +20,35 @@
         },
         "meanWater1": {
             "type": "number",
-            "description": "Mean reward from water 1"
+            "description": "Reward from water 1"
         },
-        "varianceWater1": {
+        "water1Chance": {
             "type": "number",
-            "description": "Variance of reward from water 1"
+            "description": "Probability of reward from water 1 (0-1)"
         },
         "meanWater2": {
             "type": "number",
-            "description": "Mean reward from water 2"
+            "description": "Reward from water 2"
         },
-        "varianceWater2": {
+        "water2Chance": {
             "type": "number",
-            "description": "Variance of reward from water 2"
+            "description": "Probability of reward from water 2 (0-1)"
         },
         "meanFood1": {
             "type": "number",
-            "description": "Mean reward from food 1"
+            "description": "Reward from food 1"
         },
-        "varianceFood1": {
+        "food1Chance": {
             "type": "number",
-            "description": "Variance of reward from food 1"
+            "description": "Probability of reward from food 1 (0-1)"
         },
         "meanFood2": {
             "type": "number",
-            "description": "Mean reward from food 2"
+            "description": "Reward from food 2"
         },
-        "varianceFood2": {
+        "food2Chance": {
             "type": "number",
-            "description": "Variance of reward from food 2"
+            "description": "Probability of reward from food 2 (0-1)"
         },
         "movementThirstDecay": {
             "type": "number",

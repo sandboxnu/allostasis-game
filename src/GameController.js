@@ -245,9 +245,10 @@ class GameController extends Component {
           rewardNumberWater: 0
         });
       } else {
-        this.rewardNumberColor = "#383d44";
+        this.rewardNumberColor = "#19a80a";
         this.setState({
-          rewardNumber: 0
+          rewardNumberFood: 0,
+          rewardNumberWater: 0
         });
       }
 
