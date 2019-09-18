@@ -57,8 +57,8 @@ class GameController extends Component {
       load: this.curLoad,
       curTick: 0,
       lastAction: GlobalConstants.actionEnum.Start,
-      rewardNumberWater: 0,
-      rewardNumberFood: 0,
+      rewardNumberWater: null,
+      rewardNumberFood: null,
     }
   }
 
@@ -215,6 +215,7 @@ class GameController extends Component {
     if (curX >= 0 && curX < this.rowLength
         && curY >= 0 && curY < this.columnLength) {
       let entitiesHere = this.state.entities.filter(e => e.x === curX && e.y === curY);
+      console.log(entitiesHere);
       let entityRewards = entitiesHere.reduce((total, e) => {
         let rewards = e.data.reward_fn();
         return {
@@ -231,24 +232,27 @@ class GameController extends Component {
       }
 
       let loadDelta = this._loadIncrease();
-
-      if (entityRewards.water > 0) {
-        this.rewardNumberColor = "#0954bc";
-        this.setState({
-          rewardNumberFood: 0,
-          rewardNumberWater: entityRewards.water.toFixed(1)
+      if (entitiesHere.length > 0) {
+        let rewardFood = null;
+        let rewardWater = null;
+        entitiesHere.forEach(function(element) {
+          const eName = element.data.name;
+          if (eName === "W1" || eName === "W2") {
+            rewardWater = Math.max(0.0, entityRewards.water).toFixed(1);
+          }
+          if (eName === "F1" || eName === "F2") {
+            rewardFood = Math.max(0.0, entityRewards.food).toFixed(1);
+          }
         });
-      } else if (entityRewards.food > 0) {
-        this.rewardNumberColor = "#19a80a";
+
         this.setState({
-          rewardNumberFood: entityRewards.food.toFixed(1),
-          rewardNumberWater: 0
+          rewardNumberFood: rewardFood,
+          rewardNumberWater: rewardWater
         });
       } else {
-        this.rewardNumberColor = "#19a80a";
         this.setState({
-          rewardNumberFood: 0,
-          rewardNumberWater: 0
+          rewardNumberFood: null,
+          rewardNumberWater: null
         });
       }
 
