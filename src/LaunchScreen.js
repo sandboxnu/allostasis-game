@@ -28,7 +28,7 @@ class LaunchScreen extends Component {
 	renderLaunchScreen(){
 		return (
 			<div class = "launchContainer">
-				<div class = "launchTitle"> Allostasis Behaviour Study</div>
+				<div class = "launchTitle"> Allostasis-Test Behaviour Study</div>
 				<div class = "launchSubtitle"> {ConfigurableValuesController.getIntroDescription()}</div>
 				{this.renderStartButton()}
 				<div class = "launchFooter"> Developed by <a class = "sandboxLink" href="https://sandboxneu.com/"> Sandbox Research Group </a> for David Melnikoff.</div>
