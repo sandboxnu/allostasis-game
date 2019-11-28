@@ -256,6 +256,12 @@ class GameController extends Component {
         });
       }
 
+      if (entitiesHere.length > 0) {
+        curX = ConfigurableValuesController.getInitialXPos();
+        curY = ConfigurableValuesController.getInitialYPos();
+      }
+
+
       this._adjustThirst(entityRewards.water);
       this._adjustHunger(entityRewards.food);
       this._adjustLoad(loadDelta);
