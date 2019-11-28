@@ -3,9 +3,12 @@ import Grid from './Grid/Grid.js'
 import ConfigurableValuesController from './ConfigurableValuesController.js';
 import GlobalConstants from './GlobalConstants.js';
 import LifeBarController from './LifeBars/LifeBarController.js';
+import ThirstBar from './LifeBars/ThirstBar.js';
 import ServerUtils from './ServerUtils';
 import "./GameController.css";
 import crc32 from 'js-crc';
+import HungerBar from './LifeBars/HungerBar.js';
+import LoadBar from './LifeBars/LoadBar.js';
 
 const ENTER_KEY = 13;
 const LEFT_KEY = 37;
@@ -355,22 +358,29 @@ class GameController extends Component {
     }
     return (
       <div>
-        <div className="gameController">
-          <Grid
-            gameGrid = {this.state.currentGrid}
-            entities = {this.state.entities}
-            playerX = {this.state.playerXPos}
-            playerY = {this.state.playerYPos}/>
-          <LifeBarController
-            rewardNumberFood={this.state.rewardNumberFood}
-            rewardNumberWater={this.state.rewardNumberWater}
-            hunger={this.state.hunger}
-            thirst={this.state.thirst}
-            load={this.state.load}
-            hungerRangeBottom={this.hungerLowerBound}
-            hungerRangeTop={this.hungerUpperBound}
-            thirstRangeBottom={this.thirstLowerBound}
-            thirstRangeTop={this.thirstUpperBound}/>
+        <div>
+        <LoadBar load={this.state.load}/>
+          <div className="gameController">
+            <ThirstBar 
+              thirst={this.state.thirst}
+              rangeBottom={this.thirstLowerBound}
+              rangeTop={this.thirstUpperBound}
+              rewardNumberWater={this.state.rewardNumberWater}
+            />
+            <Grid
+              gameGrid={this.state.currentGrid}
+              entities={this.state.entities}
+              playerX={this.state.playerXPos}
+              playerY={this.state.playerYPos}
+            />
+            <HungerBar 
+              hunger={this.state.hunger}
+              rangeBottom={this.hungerLowerBound}
+              rangeTop={this.hungerUpperBound}
+              rewardNumberFood={this.state.rewardNumberFood}
+            />
+          </div>
+
         </div>
       </div>
       
