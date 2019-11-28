@@ -109,6 +109,10 @@ class GameController extends Component {
       }
     }
 
+    if (x == ConfigurableValuesController.getInitialXPos() && y == ConfigurableValuesController.getInitialYPos()) {
+      return true;
+    }
+
     return collision;
   }
   
