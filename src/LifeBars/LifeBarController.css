@@ -13,14 +13,17 @@
 }
 
 .reward {
+	position: absolute;
 	font-size: 1.5em;
 	font-weight: bold;
+	padding-left: 7px;
+	padding-top: 10px;
 }
 
 .reward-left {
 	font-size: 1.5em;
 	padding-left: 72px;
-	padding-right: 93px;
+	padding-right: 70px;
 	margin-bottom: 8px;
 	font-weight: bold;
 }

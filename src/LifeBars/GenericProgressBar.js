@@ -16,6 +16,17 @@ const renderRanges = (bar, bottom, top) => {
 	);
 }
 
+const renderRangesVertical = (bar, bottom, top) => {
+	top = 425 - ((top/100) * 350 * 1);
+	bottom = 425 - ((bottom/100) *350 * 1);
+	return (
+		<div>
+			<div className="range-bottom-vertical" style = {{top: top}}></div>
+			<div className="range-top-vertical" style ={{top: bottom}}> </div>
+		</div>
+	);
+}
+
 const GenericProgressBar = (props) => {
 	let fillerColor = '#f7b733';
 
@@ -25,14 +36,30 @@ const GenericProgressBar = (props) => {
 		fillerColor = '#49AD1B'
 	}
 
+	if (props.name === 'Thirst' || props.name === 'Hunger') {
+		return(
+			<div className="genericContainerVertical">
+				<div className="generic-progress-vertical" style={{backgroundColor:fillerColor}}>
+					<Filler percentage={props.percentage} color={fillerColor} isVertical={true}/>
+					{renderRangesVertical(props.name, props.rangeBottom, props.rangeTop, 80)}
+				</div>
+				<div className="textBoxVertical" style={{paddingTop: props.paddingTop}}>
+					{props.name}
+				</div> 
+			</div>
+			)
+	}
+
 	return(
-		<div className="genericContainer">
-			<div className="textBox" style={{paddingTop: props.paddingTop}}>
-				{props.name}
+		<div>
+			<div className="textBox">
+					{props.name}
 			</div> 
-			<div className="generic-progress">
-				<Filler percentage={props.percentage} color={fillerColor}/>
-				{renderRanges(props.name, props.rangeBottom, props.rangeTop, 80)}
+			<div className="genericContainer">
+				<div className="generic-progress">
+					<Filler percentage={props.percentage} color={fillerColor}/>
+					{renderRanges(props.name, props.rangeBottom, props.rangeTop, 80)}
+				</div>
 			</div>
 		</div>
 		)

@@ -3,9 +3,13 @@ import Grid from './Grid/Grid.js'
 import ConfigurableValuesController from './ConfigurableValuesController.js';
 import GlobalConstants from './GlobalConstants.js';
 import LifeBarController from './LifeBars/LifeBarController.js';
+import ThirstBar from './LifeBars/ThirstBar.js';
 import ServerUtils from './ServerUtils';
 import "./GameController.css";
 import crc32 from 'js-crc';
+import HungerBar from './LifeBars/HungerBar.js';
+import LoadBar from './LifeBars/LoadBar.js';
+import findShortestPath from './ShortestPath'
 
 const ENTER_KEY = 13;
 const LEFT_KEY = 37;
@@ -57,9 +61,10 @@ class GameController extends Component {
       load: this.curLoad,
       curTick: 0,
       lastAction: GlobalConstants.actionEnum.Start,
-      rewardNumberWater: 0,
-      rewardNumberFood: 0,
+      rewardNumberWater: null,
+      rewardNumberFood: null,
     }
+    this.data.push(this.generateStateInfo())
   }
 
   _generateEntities() {
@@ -104,6 +109,10 @@ class GameController extends Component {
           return true;
         }
       }
+    }
+
+    if (x == ConfigurableValuesController.getInitialXPos() && y == ConfigurableValuesController.getInitialYPos()) {
+      return true;
     }
 
     return collision;
@@ -231,25 +240,35 @@ class GameController extends Component {
       }
 
       let loadDelta = this._loadIncrease();
-
-      if (entityRewards.water > 0) {
-        this.rewardNumberColor = "#0954bc";
-        this.setState({
-          rewardNumberFood: 0,
-          rewardNumberWater: entityRewards.water.toFixed(1)
+      if (entitiesHere.length > 0) {
+        let rewardFood = null;
+        let rewardWater = null;
+        entitiesHere.forEach(function(element) {
+          const eName = element.data.name;
+          if (eName === "W1" || eName === "W2") {
+            rewardWater = Math.max(0.0, entityRewards.water).toFixed(1);
+          }
+          if (eName === "F1" || eName === "F2") {
+            rewardFood = Math.max(0.0, entityRewards.food).toFixed(1);
+          }
         });
-      } else if (entityRewards.food > 0) {
-        this.rewardNumberColor = "#19a80a";
+
         this.setState({
-          rewardNumberFood: entityRewards.food.toFixed(1),
-          rewardNumberWater: 0
+          rewardNumberFood: rewardFood,
+          rewardNumberWater: rewardWater
         });
       } else {
-        this.rewardNumberColor = "#383d44";
         this.setState({
-          rewardNumber: 0
+          rewardNumberFood: null,
+          rewardNumberWater: null
         });
       }
+
+      if (entitiesHere.length > 0) {
+        curX = ConfigurableValuesController.getInitialXPos();
+        curY = ConfigurableValuesController.getInitialYPos();
+      }
+
 
       this._adjustThirst(entityRewards.water);
       this._adjustHunger(entityRewards.food);
@@ -276,14 +295,31 @@ class GameController extends Component {
   }
 
   generateStateInfo() {
+    let entitiesWithMoreData = this.state.entities;
+    entitiesWithMoreData.forEach((entity, index) => {
+      let path = findShortestPath([this.state.playerYPos, this.state.playerXPos], this.createGrid(entity.x, entity.y, this.state.entities));
+      entity.data.path = path;
+      entity.data.shortestDistance = path.length;
+    })
+    console.log(entitiesWithMoreData);
     return({
       tick : this.state.curTick,
       playerPos: [this.state.playerXPos, this.state.playerYPos],
       lastAction: this.state.lastAction,
       hunger: this.curHunger,
       thirst: this.curThirst,
-      load: this.curLoad
+      load: this.curLoad,
+      entities: entitiesWithMoreData
     });
+  }
+
+  createGrid(goalEntityX, goalEntityY, entities) {
+    let array = Array(ConfigurableValuesController.getGridRowLength()).fill().map(() => Array(ConfigurableValuesController.getGridColumnLength()).fill('Empty'));
+    entities.forEach((entity, index) => {
+      array[entity.y][entity.x] = "Obstacle";
+    })
+    array[goalEntityY][goalEntityX] = "Goal";
+    return array;
   }
 
   checkForEndGame() {
@@ -344,22 +380,29 @@ class GameController extends Component {
     }
     return (
       <div>
-        <div className="gameController">
-          <Grid
-            gameGrid = {this.state.currentGrid}
-            entities = {this.state.entities}
-            playerX = {this.state.playerXPos}
-            playerY = {this.state.playerYPos}/>
-          <LifeBarController
-            rewardNumberFood={this.state.rewardNumberFood}
-            rewardNumberWater={this.state.rewardNumberWater}
-            hunger={this.state.hunger}
-            thirst={this.state.thirst}
-            load={this.state.load}
-            hungerRangeBottom={this.hungerLowerBound}
-            hungerRangeTop={this.hungerUpperBound}
-            thirstRangeBottom={this.thirstLowerBound}
-            thirstRangeTop={this.thirstUpperBound}/>
+        <div>
+        <LoadBar load={this.state.load}/>
+          <div className="gameController">
+            <ThirstBar 
+              thirst={this.state.thirst}
+              rangeBottom={this.thirstLowerBound}
+              rangeTop={this.thirstUpperBound}
+              rewardNumberWater={this.state.rewardNumberWater}
+            />
+            <Grid
+              gameGrid={this.state.currentGrid}
+              entities={this.state.entities}
+              playerX={this.state.playerXPos}
+              playerY={this.state.playerYPos}
+            />
+            <HungerBar 
+              hunger={this.state.hunger}
+              rangeBottom={this.hungerLowerBound}
+              rangeTop={this.hungerUpperBound}
+              rewardNumberFood={this.state.rewardNumberFood}
+            />
+          </div>
+
         </div>
       </div>
       
