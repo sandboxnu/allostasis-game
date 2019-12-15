@@ -9,6 +9,7 @@ import "./GameController.css";
 import crc32 from 'js-crc';
 import HungerBar from './LifeBars/HungerBar.js';
 import LoadBar from './LifeBars/LoadBar.js';
+import findShortestPath from './ShortestPath'
 
 const ENTER_KEY = 13;
 const LEFT_KEY = 37;
@@ -63,6 +64,7 @@ class GameController extends Component {
       rewardNumberWater: null,
       rewardNumberFood: null,
     }
+    this.data.push(this.generateStateInfo())
   }
 
   _generateEntities() {
@@ -222,7 +224,6 @@ class GameController extends Component {
     if (curX >= 0 && curX < this.rowLength
         && curY >= 0 && curY < this.columnLength) {
       let entitiesHere = this.state.entities.filter(e => e.x === curX && e.y === curY);
-      console.log(entitiesHere);
       let entityRewards = entitiesHere.reduce((total, e) => {
         let rewards = e.data.reward_fn();
         return {
@@ -294,14 +295,31 @@ class GameController extends Component {
   }
 
   generateStateInfo() {
+    let entitiesWithMoreData = this.state.entities;
+    entitiesWithMoreData.forEach((entity, index) => {
+      let path = findShortestPath([this.state.playerYPos, this.state.playerXPos], this.createGrid(entity.x, entity.y, this.state.entities));
+      entity.data.path = path;
+      entity.data.shortestDistance = path.length;
+    })
+    console.log(entitiesWithMoreData);
     return({
       tick : this.state.curTick,
       playerPos: [this.state.playerXPos, this.state.playerYPos],
       lastAction: this.state.lastAction,
       hunger: this.curHunger,
       thirst: this.curThirst,
-      load: this.curLoad
+      load: this.curLoad,
+      entities: entitiesWithMoreData
     });
+  }
+
+  createGrid(goalEntityX, goalEntityY, entities) {
+    let array = Array(ConfigurableValuesController.getGridRowLength()).fill().map(() => Array(ConfigurableValuesController.getGridColumnLength()).fill('Empty'));
+    entities.forEach((entity, index) => {
+      array[entity.y][entity.x] = "Obstacle";
+    })
+    array[goalEntityY][goalEntityX] = "Goal";
+    return array;
   }
 
   checkForEndGame() {
