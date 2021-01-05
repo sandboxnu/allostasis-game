@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "informed": "^2.1.15",
     "js-crc": "^0.2.0",
     "js-file-download": "^0.4.5",
